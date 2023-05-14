@@ -1,0 +1,310 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script src="chessjs.js"></script>
+
+</head>
+<style>
+    #app::before{
+        content: "";
+        background: url('background.jpg') no-repeat center center fixed !important;
+        background-size: cover;
+        opacity: 0.8;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+    }
+    #chessboard
+    {
+        opacity:0.75;
+        filter: drop-shadow(20px 20px 20px #000);
+    }
+    .portrait
+    {
+        filter: drop-shadow(10px 10px 10px #000);
+    }
+    .piece
+    {
+        position: absolute;
+        pointer-events: none;
+    }
+    .canvasID
+    {
+        position: absolute;
+        top:0px;
+        left:0px;
+        pointer-events: none;
+    }
+    #backrect
+    {
+        position:absolute;
+        background-color: #000000;
+        width : 100%;
+        height: 100%;
+        z-index:100;
+        opacity:80%
+    }
+    .effectchar
+    {
+        position:absolute;
+        z-index:101;
+        width:30%;
+        margin-top:2%;
+        margin-left:5%;
+        pointer-events: none;
+        background-color:transparent;
+    }
+
+    .effecttext
+    {
+        position:absolute;
+        font-size:50px;
+        color: white;
+        margin-left:40%;
+        margin-top:20%;
+        z-index:101;
+        font-family: 'TheJamsil5Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/TheJamsil5Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+        text-align: center;
+
+    }
+</style>
+<body>
+<div id="app">
+    <v-app>
+        <v-main>
+            <effect v-bind:kind="turn" v-if="effect==1" @check="effectcheck"></effect>
+            <v-container>
+                <v-row  class="my-10">
+                    <v-col cols="2" class="portrait">
+                        <v-img class="my-3"
+                                src='black.png'
+                        ></v-img>
+
+                        <v-img class="my-10"
+                                src='white.png'
+                        ></v-img>
+                    </v-col>
+
+                    <v-col cols="6" offset="1" id="chessboard" ><v-img
+                            contain
+                            src='chessboard.png' id="picture" @click="mouseClick($event)"
+                    > </v-img>
+                        <div><img class="piece" height="25%" v-bind:style="{top:yPosition[0], left:xPosition[0]}" src="piece/br.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[1], left:xPosition[1]}" src="piece/bn.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[2], left:xPosition[2]}" src="piece/bb.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[3], left:xPosition[3]}" src="piece/bq.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[4], left:xPosition[4]}" src="piece/bk.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[5], left:xPosition[5]}" src="piece/bb.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[6], left:xPosition[6]}" src="piece/bn.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[7], left:xPosition[7]}" src="piece/br.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[8], left:xPosition[8]}" src="piece/bp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[9], left:xPosition[9]}" src="piece/bp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[10], left:xPosition[10]}" src="piece/bp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[11], left:xPosition[11]}" src="piece/bp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[12], left:xPosition[12]}" src="piece/bp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[13], left:xPosition[13]}" src="piece/bp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[14], left:xPosition[14]}" src="piece/bp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[15], left:xPosition[15]}" src="piece/bp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[16], left:xPosition[16]}" src="piece/wp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[17], left:xPosition[17]}"src="piece/wp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[18], left:xPosition[18]}"src="piece/wp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[19], left:xPosition[19]}"src="piece/wp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[20], left:xPosition[20]}"src="piece/wp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[21], left:xPosition[21]}"src="piece/wp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[22], left:xPosition[22]}"src="piece/wp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[23], left:xPosition[23]}"src="piece/wp.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[24], left:xPosition[24]}"src="piece/wr.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[25], left:xPosition[25]}"src="piece/wn.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[26], left:xPosition[26]}"src="piece/wb.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[27], left:xPosition[27]}"src="piece/wq.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[28], left:xPosition[28]}"src="piece/wk.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[29], left:xPosition[29]}"src="piece/wb.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[30], left:xPosition[30]}"src="piece/wn.png"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[31], left:xPosition[31]}"src="piece/wr.png"></img>
+                            </div>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-main>
+    </v-app>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.js"></script>
+
+<script>
+    Vue.component('effect',{
+        props: ['kind'],
+//        data: function () {
+            //           return 0;
+            //      },
+            methods: {
+            effectcheck() {
+                console.log("a")
+                this.$emit('check', 0)
+            }
+        },
+        template:
+            '<div><div id="backrect" v-on:click="effectcheck" ></div>' +
+            '<img class="effectchar" src="effect/castling.png" v-if="kind==1" ></img>' +
+            '<img class="effectchar" src="effect/promotion.png" v-if="kind==2" ></img>' +
+            '<div class="effecttext" v-if="kind==1">"명령대로...<br>제 목숨을 바쳐 당신을 지키겠습니다"</div>' +
+            '<div class="effecttext" v-if="kind==2">"당신의 여왕이 될께요"</div></div>'
+    });
+</script>
+<script>
+    const chess = new Chess()
+    new Vue({
+        el: '#app',
+        data : {
+          xPosition: [
+              "-1%", "11.5%", "23%", "34.5%", "47%", "59%", "71%", "83%", "-1%", "11.5%", "23%", "34.5%", "47%", "59%", "71%", "83%","-1%", "11.5%", "23%", "34.5%", "47%", "59%", "71%", "83%","-1%", "11.5%", "23%", "34.5%", "47%", "59%", "71%", "83%"
+          ],
+            yPosition : [
+               "-7%", "-7%", "-7%", "-7%", "-7%", "-7%", "-7%", "-7%", "4%", "4%","4%", "4%","4%", "4%","4%", "4%","62%","62%","62%","62%","62%","62%","62%","62%","74%","74%","74%","74%","74%","74%","74%","74%"
+                ],
+            presentnote:0,
+            piecemove: [],
+            turn:1,
+            effect:0
+        },
+        methods : {
+            effectcheck(check) {
+                this.effect=0;
+            },
+            mouseClick(event) {
+                let note=notation(event.target.offsetWidth, event.target.offsetHeight, event.offsetX, event.offsetY)
+                if(this.effect==1)
+                {
+                    this.effect=0;
+                }
+                if(chess.moves({square: note}).length!=0) {
+                    for(let i=0;i<chess.moves({square: note}).length;i++)
+                    {
+                        let move=chess.moves({square: note})[i]
+                        if(chess.moves({square: note})[i].slice(-1)=="+" || chess.moves({square: note})[i].slice(-1)=="#")
+                        {
+                            move=chess.moves({square: note})[i].slice(0,chess.moves({square: note})[i].length-1)
+                        }
+                        if(move=="O-O")
+                        {
+                            if(chess.turn()=="w")
+                            {
+                                this.piecemove[i]="cw"
+                            }
+                            else
+                            {
+                                this.piecemove[i]="cb"
+                            }
+                        }
+                        else if(move=="O-O-O")
+                        {
+                            if(chess.turn()=="w")
+                            {
+                                this.piecemove[i]="qw"
+                            }
+                            else
+                            {
+                                this.piecemove[i]="qb"
+                            }
+                        }
+                        else if(move.slice(-1)=="Q")
+                        {
+                            this.piecemove[i]=move.slice(-4,move.length-2)
+                        }
+                        else if(move.slice(-1)=="R")
+                        {
+                            this.piecemove[i]="pr"
+                        }
+                        else
+                        {
+                            this.piecemove[i]=move.slice(-2)
+                        }
+                    }
+                    console.log(this.piecemove,chess.moves({square: note}))
+                    createrect(this.piecemove, event.target.offsetWidth, event.target.offsetHeight)
+                    this.presentnote=note;
+                }
+                else if(this.piecemove.includes(note))
+                {
+                    chess.move({from:this.presentnote,to:note})
+                    let np=notepiece(this.xPosition,this.yPosition,this.presentnote)
+                    let i=notepiece(this.xPosition,this.yPosition,note)
+                    if(i)
+                    {
+                        this.xPosition[i]=0
+                        this.yPosition[i]=0
+                    }
+                    if(this.piecemove.includes("pr"))
+                    {
+                        this.turn=2;
+                        this.effect=1;
+                        console.log(note)
+                        this.$set(this.xPosition, np,0)
+                        this.$set(this.yPosition, np, 0)
+                        this.piecemove.length=0
+                        createrect([],event.target.offsetWidth, event.target.offsetHeight)
+                    }
+                    else
+                    {
+                        this.$set(this.xPosition, np, piecemovex(note))
+                        this.$set(this.yPosition, np, piecemovey(note))
+                        this.piecemove.length=0
+                        createrect([],event.target.offsetWidth, event.target.offsetHeight)
+                    }
+                }
+                else if(this.piecemove.includes("cw") && note=="g1")
+                {
+                    this.turn=1;
+                    this.effect=1;
+                    chess.move("O-O")
+                    this.$set(this.xPosition,notepiece(this.xPosition,this.yPosition,"e1"),piecemovex("g1"))
+                    this.$set(this.xPosition,notepiece(this.xPosition,this.yPosition,"h1"),piecemovex("f1"))
+                    createrect([],event.target.offsetWidth, event.target.offsetHeight)
+                    this.piecemove.length=0
+                }
+                else if(this.piecemove.includes("cb") && note=="g8")
+                {
+                    chess.move("O-O")
+                    this.$set(this.xPosition,notepiece(this.xPosition,this.yPosition,"e8"),piecemovex("g8"))
+                    this.$set(this.xPosition,notepiece(this.xPosition,this.yPosition,"h8"),piecemovex("f8"))
+                    createrect([],event.target.offsetWidth, event.target.offsetHeight)
+                    this.piecemove.length=0
+                }
+                else if(this.piecemove.includes("qw") && note=="c1")
+                {
+                    chess.move("O-O-O")
+                    this.$set(this.xPosition,notepiece(this.xPosition,this.yPosition,"e1"),piecemovex("c1"))
+                    this.$set(this.xPosition,notepiece(this.xPosition,this.yPosition,"a1"),piecemovex("d1"))
+                    createrect([],event.target.offsetWidth, event.target.offsetHeight)
+                    this.piecemove.length=0
+                }
+                else if(this.piecemove.includes("qb") && note=="c8")
+                {
+                    chess.move("O-O")
+                    this.$set(this.xPosition,notepiece(this.xPosition,this.yPosition,"e8"),piecemovex("c8"))
+                    this.$set(this.xPosition,notepiece(this.xPosition,this.yPosition,"a8"),piecemovex("d8"))
+                    createrect([],event.target.offsetWidth, event.target.offsetHeight)
+                    this.piecemove.length=0
+                }
+            },
+        },
+        vuetify: new Vuetify(),
+    });
+</script>
+</body>
+
+</html>
