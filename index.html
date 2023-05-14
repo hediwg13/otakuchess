@@ -317,7 +317,7 @@
                 }
                 else if(this.piecemove.includes("cw") && note=="g1")
                 {
-                    this.effectcase=3;
+                    this.effectcase=1;
                     this.effect=1;
                     chess.move("O-O")
                     this.$set(this.xPosition,notepiece(this.xPosition,this.yPosition,"e1"),piecemovex("g1"))
@@ -327,6 +327,8 @@
                 }
                 else if(this.piecemove.includes("cb") && note=="g8")
                 {
+                    this.effectcase=1;
+                    this.effect=1;
                     chess.move("O-O")
                     this.$set(this.xPosition,notepiece(this.xPosition,this.yPosition,"e8"),piecemovex("g8"))
                     this.$set(this.xPosition,notepiece(this.xPosition,this.yPosition,"h8"),piecemovex("f8"))
