@@ -252,6 +252,12 @@
                         this.xPosition[i]=0
                         this.yPosition[i]=0
                     }
+                    if(chess.fen().split(" ")[3]==note)
+                    {
+                        let num=notepiece(this.xPosition,this.yPosition,note.slice(0,1)+(Number(note.slice(1,2))/3+3).toString())
+                        this.xPosition[num]=0
+                        this.yPosition[num]=0
+                    }
                     if(this.piecemove.includes("pr"))
                     {
                         this.effectcase=2;
