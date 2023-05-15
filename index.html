@@ -14,7 +14,7 @@
 <style>
     #app::before{
         content: "";
-        background: url('background.jpg') no-repeat center center fixed !important;
+        background: url('public/assets/background/background.jpg') no-repeat center center fixed !important;
         background-size: cover;
         opacity: 0.8;
         position: absolute;
@@ -89,50 +89,50 @@
                 <v-row  class="my-10">
                     <v-col cols="2" class="portrait">
                         <v-img class="my-3"
-                                src='black.png'
+                                src='public/assets/background/black.png'
                         ></v-img>
 
                         <v-img class="my-10"
-                                src='white.png'
+                                src='public/assets/background/white.png'
                         ></v-img>
                     </v-col>
 
                     <v-col cols="6" offset="1" id="chessboard" ><v-img
                             contain
-                            src='chessboard.png' id="picture" @click="mouseClick($event)"
+                            src='public/assets/background/chessboard.png' id="picture" @click="mouseClick($event)"
                     > </v-img>
-                        <div><img class="piece" height="25%" v-bind:style="{top:yPosition[0], left:xPosition[0]}" src="piece/br.png" v-show="yPosition[0]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[1], left:xPosition[1]}" src="piece/bn.png" v-show="yPosition[1]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[2], left:xPosition[2]}" src="piece/bb.png" v-show="yPosition[2]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[3], left:xPosition[3]}" src="piece/bq.png" v-show="yPosition[3]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[4], left:xPosition[4]}" src="piece/bk.png" v-show="yPosition[4]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[5], left:xPosition[5]}" src="piece/bb.png" v-show="yPosition[5]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[6], left:xPosition[6]}" src="piece/bn.png" v-show="yPosition[6]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[7], left:xPosition[7]}" src="piece/br.png" v-show="yPosition[7]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[8], left:xPosition[8]}" src="piece/bp.png" v-show="yPosition[8]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[9], left:xPosition[9]}" src="piece/bp.png" v-show="yPosition[9]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[10], left:xPosition[10]}" src="piece/bp.png" v-show="yPosition[10]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[11], left:xPosition[11]}" src="piece/bp.png" v-show="yPosition[11]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[12], left:xPosition[12]}" src="piece/bp.png" v-show="yPosition[12]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[13], left:xPosition[13]}" src="piece/bp.png" v-show="yPosition[13]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[14], left:xPosition[14]}" src="piece/bp.png" v-show="yPosition[14]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[15], left:xPosition[15]}" src="piece/bp.png" v-show="yPosition[15]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[16], left:xPosition[16]}" src="piece/wp.png" v-show="yPosition[16]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[17], left:xPosition[17]} "src="piece/wp.png" v-show="yPosition[17]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[18], left:xPosition[18]} "src="piece/wp.png" v-show="yPosition[18]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[19], left:xPosition[19]} "src="piece/wp.png" v-show="yPosition[19]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[20], left:xPosition[20]} "src="piece/wp.png" v-show="yPosition[20]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[21], left:xPosition[21]} "src="piece/wp.png" v-show="yPosition[21]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[22], left:xPosition[22]} "src="piece/wp.png" v-show="yPosition[22]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[23], left:xPosition[23]} "src="piece/wp.png" v-show="yPosition[23]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[24], left:xPosition[24]} "src="piece/wr.png" v-show="yPosition[24]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[25], left:xPosition[25]} "src="piece/wn.png" v-show="yPosition[25]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[26], left:xPosition[26]} "src="piece/wb.png" v-show="yPosition[26]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[27], left:xPosition[27]} "src="piece/wq.png" v-show="yPosition[27]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[28], left:xPosition[28]} "src="piece/wk.png" v-show="yPosition[28]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[29], left:xPosition[29]} "src="piece/wb.png" v-show="yPosition[29]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[30], left:xPosition[30]} "src="piece/wn.png" v-show="yPosition[30]!=0"></img>
-                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[31], left:xPosition[31]} "src="piece/wr.png" v-show="yPosition[31]!=0"></img>
+                        <div><img class="piece" height="25%" v-bind:style="{top:yPosition[0], left:xPosition[0]}" src="public/assets/objects/br.png" v-show="yPosition[0]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[1], left:xPosition[1]}" src="public/assets/objects/bn.png" v-show="yPosition[1]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[2], left:xPosition[2]}" src="public/assets/objects/bb.png" v-show="yPosition[2]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[3], left:xPosition[3]}" src="public/assets/objects/bq.png" v-show="yPosition[3]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[4], left:xPosition[4]}" src="public/assets/objects/bk.png" v-show="yPosition[4]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[5], left:xPosition[5]}" src="public/assets/objects/bb.png" v-show="yPosition[5]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[6], left:xPosition[6]}" src="public/assets/objects/bn.png" v-show="yPosition[6]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[7], left:xPosition[7]}" src="public/assets/objects/br.png" v-show="yPosition[7]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[8], left:xPosition[8]}" src="public/assets/objects/bp.png" v-show="yPosition[8]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[9], left:xPosition[9]}" src="public/assets/objects/bp.png" v-show="yPosition[9]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[10], left:xPosition[10]}" src="public/assets/objects/bp.png" v-show="yPosition[10]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[11], left:xPosition[11]}" src="public/assets/objects/bp.png" v-show="yPosition[11]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[12], left:xPosition[12]}" src="public/assets/objects/bp.png" v-show="yPosition[12]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[13], left:xPosition[13]}" src="public/assets/objects/bp.png" v-show="yPosition[13]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[14], left:xPosition[14]}" src="public/assets/objects/bp.png" v-show="yPosition[14]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[15], left:xPosition[15]}" src="public/assets/objects/bp.png" v-show="yPosition[15]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[16], left:xPosition[16]}" src="public/assets/objects/wp.png" v-show="yPosition[16]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[17], left:xPosition[17]} "src="public/assets/objects/wp.png" v-show="yPosition[17]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[18], left:xPosition[18]} "src="public/assets/objects/wp.png" v-show="yPosition[18]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[19], left:xPosition[19]} "src="public/assets/objects/wp.png" v-show="yPosition[19]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[20], left:xPosition[20]} "src="public/assets/objects/wp.png" v-show="yPosition[20]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[21], left:xPosition[21]} "src="public/assets/objects/wp.png" v-show="yPosition[21]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[22], left:xPosition[22]} "src="public/assets/objects/wp.png" v-show="yPosition[22]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[23], left:xPosition[23]} "src="public/assets/objects/wp.png" v-show="yPosition[23]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[24], left:xPosition[24]} "src="public/assets/objects/wr.png" v-show="yPosition[24]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[25], left:xPosition[25]} "src="public/assets/objects/wn.png" v-show="yPosition[25]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[26], left:xPosition[26]} "src="public/assets/objects/wb.png" v-show="yPosition[26]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[27], left:xPosition[27]} "src="public/assets/objects/wq.png" v-show="yPosition[27]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[28], left:xPosition[28]} "src="public/assets/objects/wk.png" v-show="yPosition[28]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[29], left:xPosition[29]} "src="public/assets/objects/wb.png" v-show="yPosition[29]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[30], left:xPosition[30]} "src="public/assets/objects//wn.png" v-show="yPosition[30]!=0"></img>
+                            <img class="piece" height="25%"  v-bind:style="{top:yPosition[31], left:xPosition[31]} "src="public/assets/objects/wr.png" v-show="yPosition[31]!=0"></img>
                             </div>
                     </v-col>
                 </v-row>
@@ -158,15 +158,15 @@
         },
         template:
             '<div><div id="backrect" v-on:click="effectcheck" ></div>' +
-            '<img class="effectchar" src="effect/castling.png" v-if="kind==1" ></img>' +
-            '<img class="effectchar" src="effect/promotion.png" v-if="kind==2" ></img>' +
+            '<img class="effectchar" src="public/assets/effects/castling.png" v-if="kind==1" ></img>' +
+            '<img class="effectchar" src="public/assets/effects/promotion.png" v-if="kind==2" ></img>' +
             '<div class="effecttext" v-if="kind==1">"명령대로...<br>제 목숨을 바쳐 당신을 지키겠습니다"</div>' +
             '<div class="effecttext" v-if="kind==2">"당신의 여왕이 될께요"</div>'+
-            '<img class="effectchar" src="effect/checkmate.png" v-if="kind==3" ></img>'+
+            '<img class="effectchar" src="public/assets/effects/checkmate.png" v-if="kind==3" ></img>'+
             '<div class="effecttext" v-if="kind==3">"체크메이트입니다!"</div>'+
-            '<img class="effectchar" src="effect/checkmate.png" v-if="kind==4" ></img>'+
+            '<img class="effectchar" src="public/assets/effects/checkmate.png" v-if="kind==4" ></img>'+
             '<div class="effecttext" v-if="kind==4">"무승부입니다."</div>' +
-            '<img class="effectchar" src="effect/checkmate.png" v-if="kind==5" ></img>\'+\n' +
+            '<img class="effectchar" src="public/assets/effects/checkmate.png" v-if="kind==5" ></img>\'+\n' +
             '<div class="effecttext" v-if="kind==5">"졌습니다."</div></div>'
 
     });
@@ -265,11 +265,11 @@
                         let pawn=document.getElementsByClassName("piece")
                         if(chess.turn()=='b')
                         {
-                            pawn[np].src="./piece/bq.png"
+                            pawn[np].src="./public/assets/objects/bq.png"
                         }
                         else
                         {
-                            pawn[np].src="./piece/wq.png"
+                            pawn[np].src="./public/assets/objects/wq.png"
                         }
                         this.$set(this.xPosition, np, piecemovex(note))
                         this.$set(this.yPosition, np, piecemovey(note))
