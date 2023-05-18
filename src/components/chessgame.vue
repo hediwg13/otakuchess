@@ -93,7 +93,7 @@ export default {
       presentnote : 0,
       piecemove : [],
       chesseffect : 0,
-      color:1
+      color:0
       };
     },
   methods: {
