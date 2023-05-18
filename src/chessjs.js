@@ -34,7 +34,7 @@ function notetonum(note,imgx,imgy)
     let arr=[x,y,x+imgx/8,y+imgy/8];
     return arr;
 }
-function createrect(note,imgx,imgy)
+function createrect(note,imgx,imgy,color)
 {
     if(document.getElementsByClassName("canvasID").length==0){
         const ulNode = document.getElementById("picture");
@@ -47,15 +47,27 @@ function createrect(note,imgx,imgy)
     let canvas = document.getElementsByClassName ("canvasID");
     let context = canvas[0].getContext ( "2d" );
     context.clearRect(0,0,imgx,imgy)
-    for(let i of note)
+    if(color==0)
     {
-        let [x1,y1,x2,y2]=notetonum(i,imgx,imgy)
-        context.fillRect(x1,y1,x2-x1,y2-y1)
+        for(let i of note)
+        {
+            let [x1,y1,x2,y2]=notetonum(i,imgx,imgy)
+            context.fillRect(x1,y1,x2-x1,y2-y1)
+        }
+    }
+    else if(color==1)
+    {
+        for(let i of note)
+        {
+            let [x1,y1,x2,y2]=notetonum(i,imgx,imgy)
+            context.fillRect(imgx-x2,imgy-y2,x2-x1,y2-y1)
+        }
     }
 }
-function piecemovex(note)
+function piecemovex(note,color)
 {
     let x=(note[0].substring(0.1).charCodeAt(0)-96)
+    if(color==1){x=9-x}
     switch(x){
         case 1:
             return "-1%";
@@ -75,10 +87,12 @@ function piecemovex(note)
             return "83%";
     }
 }
-function piecemovey(note)
+function piecemovey(note,color)
 {
     let y=note.substring(1.2)
-    switch(Number(Number(9-y))){
+    y=Number(Number(9-y))
+    if(color==1){y=9-y}
+    switch(y){
         case 1:
             return "-7%";
         case 2:
@@ -97,10 +111,10 @@ function piecemovey(note)
             return "74%";
     }
 }
-function notepiece(xPosition,yPosition,note)
+function notepiece(xPosition,yPosition,note,color)
 {
     for(let i=0;i<32;i++) {
-        if (xPosition[i] == piecemovex(note) && yPosition[i] == piecemovey((note))) {
+        if (xPosition[i] == piecemovex(note,color) && yPosition[i] == piecemovey(note,color)) {
             return i;
         }
     }

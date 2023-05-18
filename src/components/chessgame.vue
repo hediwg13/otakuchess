@@ -92,7 +92,8 @@ export default {
       ],
       presentnote : 0,
       piecemove : [],
-      chesseffect : 0
+      chesseffect : 0,
+      color:1
       };
     },
   methods: {
@@ -101,6 +102,10 @@ export default {
     },
     mouseClick(event) {
       let note=chessfunctions.notation(event.target.offsetWidth, event.target.offsetHeight, event.offsetX, event.offsetY) //클릭한 좌표
+       if(this.color==1)
+       {
+         note=chessfunctions.notation(event.target.offsetWidth, event.target.offsetHeight,event.target.offsetWidth- event.offsetX, event.target.offsetHeight-event.offsetY)
+       }
       if(this. chesseffect==1)
       {
         this. chesseffect=0;
@@ -150,13 +155,13 @@ export default {
             this.piecemove[i]=move.slice(-2)
           }
         }
-        chessfunctions.createrect(this.piecemove, event.target.offsetWidth, event.target.offsetHeight)
+        chessfunctions.createrect(this.piecemove, event.target.offsetWidth, event.target.offsetHeight,this.color)
         this.presentnote=note;
       }
       else if(this.piecemove.includes(note)) //이미 선택한 칸이 있는 경우
       {
-        let np=chessfunctions.notepiece(this.xPosition,this.yPosition,this.presentnote) //현재의 좌표에 있는 기물 번호
-        let i=chessfunctions.notepiece(this.xPosition,this.yPosition,note) //움직일 좌표에 있는 기물 번호
+        let np=chessfunctions.notepiece(this.xPosition,this.yPosition,this.presentnote,this.color) //현재의 좌표에 있는 기물 번호
+        let i=chessfunctions.notepiece(this.xPosition,this.yPosition,note,this.color) //움직일 좌표에 있는 기물 번호
         if(i) //움직일 좌표에 기물이 있는 경우
         {
           this.xPosition[i]=0
@@ -164,7 +169,7 @@ export default {
         }
         if(chess.fen().split(" ")[3]==note) //앙파상일 경우
         {
-          let num=chessfunctions.notepiece(this.xPosition,this.yPosition,note.slice(0,1)+(Number(note.slice(1,2))/3+3).toString())
+          let num=chessfunctions.notepiece(this.xPosition,this.yPosition,note.slice(0,1)+(Number(note.slice(1,2))/3+3).toString(),this.color)
           this.xPosition[num]=0
           this.yPosition[num]=0
         }
@@ -181,8 +186,8 @@ export default {
           {
             pawn[np].src=".../img/piece/wq.png"
           }
-          this.xPosition[np]=chessfunctions.piecemovex(note)
-          this.yPosition[np]=chessfunctions.piecemovey(note)
+          this.xPosition[np]=chessfunctions.piecemovex(note,this.color)
+          this.yPosition[np]=chessfunctions.piecemovey(note,this.color)
           if(i)
           {
             chess.move(this.presentnote.slice(0,1)+"x"+note+"=Q")
@@ -192,15 +197,15 @@ export default {
             chess.move(note+"=Q")
           }
           this.piecemove.length=0
-          chessfunctions.createrect([],event.target.offsetWidth, event.target.offsetHeight)
+          chessfunctions.createrect([],event.target.offsetWidth, event.target.offsetHeight,this.color)
         }
         else
         {
           chess.move({from:this.presentnote,to:note})
-          this.xPosition[np]=chessfunctions.piecemovex(note)
-          this.yPosition[np]=chessfunctions.piecemovey(note)
+          this.xPosition[np]=chessfunctions.piecemovex(note,this.color)
+          this.yPosition[np]=chessfunctions.piecemovey(note,this.color)
           this.piecemove.length=0
-          chessfunctions.createrect([],event.target.offsetWidth, event.target.offsetHeight)
+          chessfunctions.createrect([],event.target.offsetWidth, event.target.offsetHeight,this.color)
         }
       }
       else if(this.piecemove.includes("cw") || this.piecemove.includes("cb") || this.piecemove.includes("qw") || this.piecemove.includes("qb")) //캐슬링의 경우
@@ -211,28 +216,28 @@ export default {
             const selecteffect=store.commit('Selecteffect',1)
             store.state.effectstate=true;
             chess.move("O-O")
-            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"e1")]=chessfunctions.piecemovex("g1")
-            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"h1")]=chessfunctions.piecemovex("f1")
+            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"e1",this.color)]=chessfunctions.piecemovex("g1",this.color)
+            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"h1",this.color)]=chessfunctions.piecemovex("f1",this.color)
             break;
 
           case "g8" :
             chess.move("O-O")
-            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"e8")]=chessfunctions.piecemovex("g8")
-            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"h8")]=chessfunctions.piecemovex("f8")
+            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"e8",this.color)]=chessfunctions.piecemovex("g8",this.color)
+            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"h8",this.color)]=chessfunctions.piecemovex("f8",this.color)
             break;
 
           case "c1" :
             chess.move("O-O-O")
-            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"e1")]=chessfunctions.piecemovex("c1")
-            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"a1")]=chessfunctions.piecemovex("d1")
+            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"e1",this.color)]=chessfunctions.piecemovex("c1",this.color)
+            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"a1",this.color)]=chessfunctions.piecemovex("d1",this.color)
             break;
 
           case  "c8" :
             chess.move("O-O")
-            this.xPosition[chessfunctions.notepiece(this.xPosition, this.yPosition, "e8")] = chessfunctions.piecemovex("c8")
-            this.xPosition[chessfunctions.notepiece(this.xPosition, this.yPosition, "a8")] = chessfunctions.piecemovex("d8")
+            this.xPosition[chessfunctions.notepiece(this.xPosition, this.yPosition, "e8",this.color)] = chessfunctions.piecemovex("c8",this.color)
+            this.xPosition[chessfunctions.notepiece(this.xPosition, this.yPosition, "a8",this.color)] = chessfunctions.piecemovex("d8",this.color)
         }
-        chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight)
+        chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
         this.piecemove.length = 0
       }
       if(chess.isGameOver()) //게임이 끝났을 경우
