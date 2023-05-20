@@ -37,46 +37,50 @@ import store from '../storage/storage.js'
 <template>
   <v-col cols="6" offset="1" id="chessboard" @click="mouseClick($event)" >
     <v-img contain src='chessboard.png' id="picture"> </v-img>
-      <div>
-        <img class="piece" v-bind:style="{top:yPosition[0], left:xPosition[0]}" v-show="yPosition[0]!=0" src="../img/piece/br.png">
-        <img class="piece" v-bind:style="{top:yPosition[1], left:xPosition[1]}" v-show="yPosition[1]!=0" src="../img/piece/bn.png">
-        <img class="piece" v-bind:style="{top:yPosition[2], left:xPosition[2]}" src="../img/piece/bb.png" v-show="yPosition[2]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[3], left:xPosition[3]}" src="../img/piece/bq.png" v-show="yPosition[3]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[4], left:xPosition[4]}" src="../img/piece/bk.png" v-show="yPosition[4]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[5], left:xPosition[5]}" src="../img/piece/bb.png" v-show="yPosition[5]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[6], left:xPosition[6]}" src="../img/piece/bn.png" v-show="yPosition[6]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[7], left:xPosition[7]}" src="../img/piece/br.png" v-show="yPosition[7]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[8], left:xPosition[8]}" src="../img/piece/bp.png" v-show="yPosition[8]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[9], left:xPosition[9]}" src="../img/piece/bp.png" v-show="yPosition[9]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[10], left:xPosition[10]}" src="../img/piece/bp.png" v-show="yPosition[10]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[11], left:xPosition[11]}" src="../img/piece/bp.png" v-show="yPosition[11]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[12], left:xPosition[12]}" src="../img/piece/bp.png" v-show="yPosition[12]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[13], left:xPosition[13]}" src="../img/piece/bp.png" v-show="yPosition[13]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[14], left:xPosition[14]}" src="../img/piece/bp.png" v-show="yPosition[14]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[15], left:xPosition[15]}" src="../img/piece/bp.png" v-show="yPosition[15]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[16], left:xPosition[16]}" src="../img/piece/wp.png" v-show="yPosition[16]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[17], left:xPosition[17]}" src="../img/piece/wp.png" v-show="yPosition[17]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[18], left:xPosition[18]}" src="../img/piece/wp.png" v-show="yPosition[18]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[19], left:xPosition[19]}" src="../img/piece/wp.png" v-show="yPosition[19]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[20], left:xPosition[20]}" src="../img/piece/wp.png" v-show="yPosition[20]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[21], left:xPosition[21]}" src="../img/piece/wp.png" v-show="yPosition[21]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[22], left:xPosition[22]}" src="../img/piece/wp.png" v-show="yPosition[22]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[23], left:xPosition[23]}" src="../img/piece/wp.png" v-show="yPosition[23]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[24], left:xPosition[24]}" src="../img/piece/wr.png" v-show="yPosition[24]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[25], left:xPosition[25]}" src="../img/piece/wn.png" v-show="yPosition[25]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[26], left:xPosition[26]}" src="../img/piece/wb.png" v-show="yPosition[26]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[27], left:xPosition[27]}" src="../img/piece/wq.png" v-show="yPosition[27]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[28], left:xPosition[28]}" src="../img/piece/wk.png" v-show="yPosition[28]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[29], left:xPosition[29]}" src="../img/piece/wb.png" v-show="yPosition[29]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[30], left:xPosition[30]}" src="../img/piece/wn.png" v-show="yPosition[30]!=0">
-        <img class="piece" v-bind:style="{top:yPosition[31], left:xPosition[31]}" src="../img/piece/wr.png" v-show="yPosition[31]!=0">
+    <div><div v-for="king in boardposition.white.king">
+      <img class="piece" v-bind:style="{top:king[1],left:king[0]}" src="../img/piece/wk.png">
+    </div>
+      <div v-for="queen in boardposition.white.queen">
+        <img class="piece" v-bind:style="{top:queen[1],left:queen[0]}" src="../img/piece/wq.png">
       </div>
+      <div v-for="pawn in boardposition.white.pawn">
+        <img class="piece" v-bind:style="{top:pawn[1],left:pawn[0]}" src="../img/piece/wp.png">
+      </div>
+      <div v-for="rook in boardposition.white.rook">
+        <img class="piece" v-bind:style="{top:rook[1],left:rook[0]}" src="../img/piece/wr.png">
+      </div>
+      <div v-for="knight in boardposition.white.knight">
+        <img class="piece" v-bind:style="{top:knight[1],left:knight[0]}" src="../img/piece/wn.png">
+      </div>
+      <div v-for="bishop in boardposition.white.bishop">
+        <img class="piece" v-bind:style="{top:bishop[1],left:bishop[0]}" src="../img/piece/wb.png">
+      </div>
+      <div v-for="king in boardposition.black.king">
+        <img class="piece" v-bind:style="{top:king[1],left:king[0]}" src="../img/piece/bk.png">
+      </div>
+      <div v-for="queen in boardposition.black.queen">
+        <img class="piece" v-bind:style="{top:queen[1],left:queen[0]}" src="../img/piece/bq.png">
+      </div>
+      <div v-for="pawn in boardposition.black.pawn">
+        <img class="piece" v-bind:style="{top:pawn[1],left:pawn[0]}" src="../img/piece/bp.png">
+      </div>
+      <div v-for="rook in boardposition.black.rook">
+        <img class="piece" v-bind:style="{top:rook[1],left:rook[0]}" src="../img/piece/br.png">
+      </div>
+      <div v-for="knight in boardposition.black.knight">
+        <img class="piece" v-bind:style="{top:knight[1],left:knight[0]}" src="../img/piece/bn.png">
+      </div>
+      <div v-for="bishop in boardposition.black.bishop">
+        <img class="piece" v-bind:style="{top:bishop[1],left:bishop[0]}" src="../img/piece/bb.png">
+      </div>
+    </div>
   </v-col>
 </template>
 
 <script>
 import {Chess} from 'chess.js'
 import chessfunctions from '../chessjs'
+import qs from 'qs'
 const chess=new Chess();
 export default {
   components:{
@@ -84,32 +88,72 @@ export default {
   },
   data(){
     return{
-      xPosition: [
-        "-1%", "11.5%", "23%", "34.5%", "47%", "59%", "71%", "83%", "-1%", "11.5%", "23%", "34.5%", "47%", "59%", "71%", "83%","-1%", "11.5%", "23%", "34.5%", "47%", "59%", "71%", "83%","-1%", "11.5%", "23%", "34.5%", "47%", "59%", "71%", "83%"
-      ],
-      yPosition : [
-        "-7%", "-7%", "-7%", "-7%", "-7%", "-7%", "-7%", "-7%", "4%", "4%","4%", "4%","4%", "4%","4%", "4%","62%","62%","62%","62%","62%","62%","62%","62%","74%","74%","74%","74%","74%","74%","74%","74%"
-      ],
       presentnote : 0,
       piecemove : [],
       chesseffect : 0,
-      color:0
-      };
-    },
+      color:0,
+      boardposition:{white:{pawn:[],knight:[],rook:[],bishop:[],queen:[],king:[]},black:{pawn:[],knight:[],rook:[],bishop:[],queen:[],king:[]}}
+    };
+  },
   methods: {
-     effectcheck() {
-       const deleteeffect=store.commit('Deleteeffect',0)
+    effectcheck() {
+      const deleteeffect=store.commit('Deleteeffect',0)
+    },
+    connettolichess()
+    {
+      const headers = {
+        Authorization: 'Bearer ' + 'lip_wO5QjDo5iIpfrpQzlW18',
+        "Content-Type": `application/x-www-form-urlencoded`,
+      };
+      const BASE_URL = 'https://lichess.org/api/challenge/ai'
+      const data={
+        "level": 1,
+        "clock.limit": 10800,
+        "clock.increment": 60,
+        "days": 1,
+        "color": "white",
+        "varient": "standard",
+        "fen": chess.fen()
+      }
+      this.axios.post(`${BASE_URL}`,qs.stringify(data),{headers})
+          .then((result)  => {
+            console.log(result.data)
+            localStorage.setItem("gameid", result.data.id);}
+          )
     },
     mouseClick(event) {
       let note=chessfunctions.notation(event.target.offsetWidth, event.target.offsetHeight, event.offsetX, event.offsetY) //클릭한 좌표
-       if(this.color==1)
-       {
-         note=chessfunctions.notation(event.target.offsetWidth, event.target.offsetHeight,event.target.offsetWidth- event.offsetX, event.target.offsetHeight-event.offsetY)
-       }
+      if(this.color==1) //흑백 전환
+      {
+        note=chessfunctions.notation(event.target.offsetWidth, event.target.offsetHeight,event.target.offsetWidth- event.offsetX, event.target.offsetHeight-event.offsetY)
+      }
+
+      const headers = {
+        Authorization: 'Bearer ' + 'lip_wO5QjDo5iIpfrpQzlW18',
+        "Content-Type": `application/x-www-form-urlencoded`,
+      };
+      let BASE_URL = 'https://lichess.org/api/bot/game/'+localStorage.getItem("gameid")+'/move/'
+     let data={
+        "gameId": localStorage.getItem("gameid"),
+        "move": "",
+       "offeringDraw":false
+      }
+
       if(this. chesseffect==1)
       {
         this. chesseffect=0;
       }
+      /*
+      if(chess.turn()=='b') {
+        if(this.color==0) {
+          return 0;
+        }
+      }
+      else {
+        if(this.color==1) {
+          return 0;
+        }
+      }*/
       if(chess.moves({square: note}).length!=0) //클릭한 좌표에 움직일 수 있는 기물이 있을 경우
       {
         this.piecemove=[]
@@ -122,23 +166,19 @@ export default {
           }
           if(move=="O-O") //킹사이드 캐슬링일 경우
           {
-            if(chess.turn()=="w")
-            {
+            if(chess.turn()=="w") {
               this.piecemove[i]="cw"
             }
-            else
-            {
+            else{
               this.piecemove[i]="cb"
             }
           }
           else if(move=="O-O-O") //퀸사이드 캐슬링일 경우
           {
-            if(chess.turn()=="w")
-            {
+            if(chess.turn()=="w") {
               this.piecemove[i]="qw"
             }
-            else
-            {
+            else {
               this.piecemove[i]="qb"
             }
           }
@@ -146,12 +186,7 @@ export default {
           {
             this.piecemove[i]=move.slice(-4,move.length-2)
           }
-          else if(move.slice(-1)=="R") //프로모션이라는 걸 알려주기
-          {
-            this.piecemove[i]="pr"
-          }
-          else //그 외
-          {
+          else {//그 외
             this.piecemove[i]=move.slice(-2)
           }
         }
@@ -160,85 +195,94 @@ export default {
       }
       else if(this.piecemove.includes(note)) //이미 선택한 칸이 있는 경우
       {
-        let np=chessfunctions.notepiece(this.xPosition,this.yPosition,this.presentnote,this.color) //현재의 좌표에 있는 기물 번호
-        let i=chessfunctions.notepiece(this.xPosition,this.yPosition,note,this.color) //움직일 좌표에 있는 기물 번호
-        if(i) //움직일 좌표에 기물이 있는 경우
-        {
-          this.xPosition[i]=0
-          this.yPosition[i]=0
-        }
-        if(chess.fen().split(" ")[3]==note) //앙파상일 경우
-        {
-          let num=chessfunctions.notepiece(this.xPosition,this.yPosition,note.slice(0,1)+(Number(note.slice(1,2))/3+3).toString(),this.color)
-          this.xPosition[num]=0
-          this.yPosition[num]=0
-        }
-        if(this.piecemove.includes("pr")) //프로모션일 경우
-        {
-          const selecteffect=store.commit('Selecteffect',2);
-          store.state.effectstate=true;
-          let pawn=document.getElementsByClassName("piece")
-          if(chess.turn()=='b') //폰을 퀸으로 바꾸기
-          {
-            pawn[np].src="../img/piece/bq.png"
-          }
-          else
-          {
-            pawn[np].src=".../img/piece/wq.png"
-          }
-          this.xPosition[np]=chessfunctions.piecemovex(note,this.color)
-          this.yPosition[np]=chessfunctions.piecemovey(note,this.color)
-          if(i)
-          {
-            chess.move(this.presentnote.slice(0,1)+"x"+note+"=Q")
-          }
-          else
-          {
-            chess.move(note+"=Q")
-          }
-          this.piecemove.length=0
-          chessfunctions.createrect([],event.target.offsetWidth, event.target.offsetHeight,this.color)
-        }
-        else
-        {
-          chess.move({from:this.presentnote,to:note})
-          this.xPosition[np]=chessfunctions.piecemovex(note,this.color)
-          this.yPosition[np]=chessfunctions.piecemovey(note,this.color)
-          this.piecemove.length=0
-          chessfunctions.createrect([],event.target.offsetWidth, event.target.offsetHeight,this.color)
-        }
-      }
-      else if(this.piecemove.includes("cw") || this.piecemove.includes("cb") || this.piecemove.includes("qw") || this.piecemove.includes("qb")) //캐슬링의 경우
-      {
-        switch(note)
-        {
-          case  "g1" :
-            const selecteffect=store.commit('Selecteffect',1)
-            store.state.effectstate=true;
-            chess.move("O-O")
-            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"e1",this.color)]=chessfunctions.piecemovex("g1",this.color)
-            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"h1",this.color)]=chessfunctions.piecemovex("f1",this.color)
-            break;
-
-          case "g8" :
-            chess.move("O-O")
-            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"e8",this.color)]=chessfunctions.piecemovex("g8",this.color)
-            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"h8",this.color)]=chessfunctions.piecemovex("f8",this.color)
-            break;
-
-          case "c1" :
-            chess.move("O-O-O")
-            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"e1",this.color)]=chessfunctions.piecemovex("c1",this.color)
-            this.xPosition[chessfunctions.notepiece(this.xPosition,this.yPosition,"a1",this.color)]=chessfunctions.piecemovex("d1",this.color)
-            break;
-
-          case  "c8" :
-            chess.move("O-O")
-            this.xPosition[chessfunctions.notepiece(this.xPosition, this.yPosition, "e8",this.color)] = chessfunctions.piecemovex("c8",this.color)
-            this.xPosition[chessfunctions.notepiece(this.xPosition, this.yPosition, "a8",this.color)] = chessfunctions.piecemovex("d8",this.color)
-        }
+        let i=this.piecemove.indexOf(note)
+        let move=chess.move(chess.moves({square:this.presentnote})[i])
         chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
         this.piecemove.length = 0
+
+   /*
+        BASE_URL=BASE_URL+move.from+move.to
+        data.move=move.from+move.to
+        this.axios.post(`${BASE_URL}`,qs.stringify(data),{headers})
+            .then((result)  => {
+            })*/
+      }
+      else if(this.piecemove.includes("cw") || this.piecemove.includes("cb") || this.piecemove.includes("qw") || this.piecemove.includes("qb"))
+      {
+        if(this.piecemove.includes("cw") || this.piecemove.includes("cb")) {
+          let move=chess.move("O-O")
+        }
+        else {
+          chess.move("O-O-O")
+        }
+        const selecteffect=store.commit('Selecteffect',1);
+        store.state.effectstate=true;
+        chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
+        this.piecemove.length = 0
+      }
+      let number=new Array(0,0,0,0,0,0,0,0,0,0,0,0)
+      this.boardposition={white:{pawn:[],knight:[],rook:[],bishop:[],queen:[],king:[]},black:{pawn:[],knight:[],rook:[],bishop:[],queen:[],king:[]}}
+      for(let i in chess.board())
+      {
+        for(let j in chess.board())
+        {
+          if(chess.board()[i][j]!=null && chess.board()[i][j].color=='w')
+          {
+            switch(chess.board()[i][j].type){
+              case 'p':
+                this.boardposition.white.pawn[number[0]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+                number[0]++;
+                break;
+              case 'n':
+                this.boardposition.white.knight[number[1]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+                number[1]++;
+                break;
+              case 'b':
+                this.boardposition.white.bishop[number[2]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+                number[2]++;
+                break;
+              case 'r':
+                this.boardposition.white.rook[number[3]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+                number[3]++;
+                break;
+              case 'q':
+                this.boardposition.white.queen[number[4]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+                number[4]++;
+                break;
+              case 'k':
+                this.boardposition.white.king[number[5]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+                number[5]++;
+            }
+          }
+          else if(chess.board()[i][j]!=null && chess.board()[i][j].color=='b')
+          {switch(chess.board()[i][j].type){
+            case 'p':
+              this.boardposition.black.pawn[number[6]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+              number[6]++;
+              break;
+            case 'n':
+              this.boardposition.black.knight[number[7]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+              number[7]++;
+              break;
+            case 'b':
+              this.boardposition.black.bishop[number[8]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+              number[8]++;
+              break;
+            case 'r':
+              this.boardposition.black.rook[number[9]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+              number[9]++;
+              break;
+            case 'q':
+              this.boardposition.black.queen[number[10]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+              number[10]++;
+              break;
+            case 'k':
+              this.boardposition.black.king[number[11]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+              number[11]++;
+          }
+
+          }
+        }
       }
       if(chess.isGameOver()) //게임이 끝났을 경우
       {
@@ -261,15 +305,9 @@ export default {
           store.state.effectstate=true;
         }
         chess.reset()
-        this.xPosition=[
-          "-1%", "11.5%", "23%", "34.5%", "47%", "59%", "71%", "83%", "-1%", "11.5%", "23%", "34.5%", "47%", "59%", "71%", "83%","-1%", "11.5%", "23%", "34.5%", "47%", "59%", "71%", "83%","-1%", "11.5%", "23%", "34.5%", "47%", "59%", "71%", "83%"
-        ];
-        this.yPosition=[
-          "-7%", "-7%", "-7%", "-7%", "-7%", "-7%", "-7%", "-7%", "4%", "4%","4%", "4%","4%", "4%","4%", "4%","62%","62%","62%","62%","62%","62%","62%","62%","74%","74%","74%","74%","74%","74%","74%","74%"
-        ];
       }
     },
   }
 
-  };
+};
 </script>
