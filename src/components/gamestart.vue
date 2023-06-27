@@ -1,10 +1,10 @@
 <template>
 <v-main class="background">
   <v-container class="ma-0">
-  <img class="rook" src='start/rook.png'>
-    <img class="pawn" src='start/pawn.png'>
+  <img class="rook" src='/start/rook.png'>
+    <img class="pawn" src='/start/pawn.png'>
     <router-link to ="/select"><v-btn class="gamestart" variant="tonal" color="white">game</v-btn></router-link>
-    <img class="knight" src='start/knight.png'>
+    <img class="knight" src='/start/knight.png'>
   </v-container>
 </v-main>
 </template>
