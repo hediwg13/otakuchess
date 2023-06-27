@@ -14,7 +14,7 @@ import store from '../storage/storage.js'
 {
   position: absolute;
   pointer-events: none;
-  max-height:25%
+  max-height:25%;
 }
 
 #chessboard
