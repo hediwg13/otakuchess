@@ -16,17 +16,7 @@ import store from '../storage/storage.js'
   pointer-events: none;
   max-height:25%
 }
-#app::before{
-  content: "";
-  background: url('../img/background.jpg') no-repeat center center fixed !important;
-  background-size: cover;
-  opacity: 0.8;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-}
+
 #chessboard
 {
   opacity:0.75;
@@ -35,8 +25,8 @@ import store from '../storage/storage.js'
 </style>
 
 <template>
-  <v-col cols="6" offset="1" id="chessboard" @click="mouseClick($event)" >
-    <v-img contain src='chessboard.png' id="picture"> </v-img>
+  <div id="chessboard" @click="mouseClick($event)" >
+    <v-img src='/chessboard.png' id="picture"> </v-img>
     <div><div v-for="king in boardposition.white.king">
       <img class="piece" v-bind:style="{top:king[1],left:king[0]}" src="../img/piece/wk.png">
     </div>
@@ -74,14 +64,19 @@ import store from '../storage/storage.js'
         <img class="piece" v-bind:style="{top:bishop[1],left:bishop[0]}" src="../img/piece/bb.png">
       </div>
     </div>
-  </v-col>
+  </div>
 </template>
 
 <script>
 import {Chess} from 'chess.js'
 import chessfunctions from '../chessjs'
 import qs from 'qs'
+import * as jsChessEngine from 'js-chess-engine'
+import ndjsonStream from "can-ndjson-stream";
+
 const chess=new Chess();
+const game=new jsChessEngine.Game();
+
 export default {
   components:{
     effect
@@ -121,6 +116,73 @@ export default {
             localStorage.setItem("gameid", result.data.id);}
           )
     },
+    drawposition()
+    {
+  let number=new Array(0,0,0,0,0,0,0,0,0,0,0,0)
+  this.boardposition={white:{pawn:[],knight:[],rook:[],bishop:[],queen:[],king:[]},black:{pawn:[],knight:[],rook:[],bishop:[],queen:[],king:[]}}
+  for(let i in chess.board())
+  {
+    for(let j in chess.board())
+    {
+      if(chess.board()[i][j]!=null && chess.board()[i][j].color=='w')
+      {
+        switch(chess.board()[i][j].type){
+          case 'p':
+            this.boardposition.white.pawn[number[0]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+            number[0]++;
+            break;
+          case 'n':
+            this.boardposition.white.knight[number[1]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+            number[1]++;
+            break;
+          case 'b':
+            this.boardposition.white.bishop[number[2]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+            number[2]++;
+            break;
+          case 'r':
+            this.boardposition.white.rook[number[3]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+            number[3]++;
+            break;
+          case 'q':
+            this.boardposition.white.queen[number[4]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+            number[4]++;
+            break;
+          case 'k':
+            this.boardposition.white.king[number[5]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+            number[5]++;
+        }
+      }
+      else if(chess.board()[i][j]!=null && chess.board()[i][j].color=='b')
+      {switch(chess.board()[i][j].type){
+        case 'p':
+          this.boardposition.black.pawn[number[6]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+          number[6]++;
+          break;
+        case 'n':
+          this.boardposition.black.knight[number[7]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+          number[7]++;
+          break;
+        case 'b':
+          this.boardposition.black.bishop[number[8]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+          number[8]++;
+          break;
+        case 'r':
+          this.boardposition.black.rook[number[9]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+          number[9]++;
+          break;
+        case 'q':
+          this.boardposition.black.queen[number[10]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+          number[10]++;
+          break;
+        case 'k':
+          this.boardposition.black.king[number[11]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
+          number[11]++;
+      }
+
+      }
+    }
+  }
+},
     mouseClick(event) {
       let note=chessfunctions.notation(event.target.offsetWidth, event.target.offsetHeight, event.offsetX, event.offsetY) //클릭한 좌표
       if(this.color==1) //흑백 전환
@@ -128,16 +190,6 @@ export default {
         note=chessfunctions.notation(event.target.offsetWidth, event.target.offsetHeight,event.target.offsetWidth- event.offsetX, event.target.offsetHeight-event.offsetY)
       }
 
-      const headers = {
-        Authorization: 'Bearer ' + 'lip_wO5QjDo5iIpfrpQzlW18',
-        "Content-Type": `application/x-www-form-urlencoded`,
-      };
-      let BASE_URL = 'https://lichess.org/api/bot/game/'+localStorage.getItem("gameid")+'/move/'
-     let data={
-        "gameId": localStorage.getItem("gameid"),
-        "move": "",
-       "offeringDraw":false
-      }
 
       if(this. chesseffect==1)
       {
@@ -197,15 +249,35 @@ export default {
       {
         let i=this.piecemove.indexOf(note)
         let move=chess.move(chess.moves({square:this.presentnote})[i])
+        game.move(move.from, move.to)
+        if(chess.isGameOver()) //게임이 끝났을 경우
+        {
+          if(chess.isCheckmate())
+          {
+            if(chess.turn()=="w")
+            {
+              const selecteffect=store.commit('Selecteffect',5);
+              store.state.effectstate=true;
+            }
+            else
+            {
+              const selecteffect=store.commit('Selecteffect',3);
+              store.state.effectstate=true;
+            }
+          }
+          if(chess.isDraw())
+          {
+            const selecteffect=store.commit('Selecteffect',4);
+            store.state.effectstate=true;
+          }
+          chess.reset()
+        }
+        const aimove=game.aiMove(1)
+        chess.move({from:Object.keys(aimove)[0].toLowerCase(),to:Object.values(aimove)[0].toLowerCase()})
+        this.drawposition()
         chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
         this.piecemove.length = 0
 
-   /*
-        BASE_URL=BASE_URL+move.from+move.to
-        data.move=move.from+move.to
-        this.axios.post(`${BASE_URL}`,qs.stringify(data),{headers})
-            .then((result)  => {
-            })*/
       }
       else if(this.piecemove.includes("cw") || this.piecemove.includes("cb") || this.piecemove.includes("qw") || this.piecemove.includes("qb"))
       {
@@ -220,92 +292,8 @@ export default {
         chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
         this.piecemove.length = 0
       }
-      let number=new Array(0,0,0,0,0,0,0,0,0,0,0,0)
-      this.boardposition={white:{pawn:[],knight:[],rook:[],bishop:[],queen:[],king:[]},black:{pawn:[],knight:[],rook:[],bishop:[],queen:[],king:[]}}
-      for(let i in chess.board())
-      {
-        for(let j in chess.board())
-        {
-          if(chess.board()[i][j]!=null && chess.board()[i][j].color=='w')
-          {
-            switch(chess.board()[i][j].type){
-              case 'p':
-                this.boardposition.white.pawn[number[0]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
-                number[0]++;
-                break;
-              case 'n':
-                this.boardposition.white.knight[number[1]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
-                number[1]++;
-                break;
-              case 'b':
-                this.boardposition.white.bishop[number[2]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
-                number[2]++;
-                break;
-              case 'r':
-                this.boardposition.white.rook[number[3]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
-                number[3]++;
-                break;
-              case 'q':
-                this.boardposition.white.queen[number[4]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
-                number[4]++;
-                break;
-              case 'k':
-                this.boardposition.white.king[number[5]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
-                number[5]++;
-            }
-          }
-          else if(chess.board()[i][j]!=null && chess.board()[i][j].color=='b')
-          {switch(chess.board()[i][j].type){
-            case 'p':
-              this.boardposition.black.pawn[number[6]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
-              number[6]++;
-              break;
-            case 'n':
-              this.boardposition.black.knight[number[7]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
-              number[7]++;
-              break;
-            case 'b':
-              this.boardposition.black.bishop[number[8]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
-              number[8]++;
-              break;
-            case 'r':
-              this.boardposition.black.rook[number[9]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
-              number[9]++;
-              break;
-            case 'q':
-              this.boardposition.black.queen[number[10]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
-              number[10]++;
-              break;
-            case 'k':
-              this.boardposition.black.king[number[11]]=[chessfunctions.piecemovex(chess.board()[i][j].square,this.color),chessfunctions.piecemovey(chess.board()[i][j].square,this.color)]
-              number[11]++;
-          }
+      this.drawposition()
 
-          }
-        }
-      }
-      if(chess.isGameOver()) //게임이 끝났을 경우
-      {
-        if(chess.isCheckmate())
-        {
-          if(chess.turn()=="w")
-          {
-            const selecteffect=store.commit('Selecteffect',5);
-            store.state.effectstate=true;
-          }
-          else
-          {
-            const selecteffect=store.commit('Selecteffect',3);
-            store.state.effectstate=true;
-          }
-        }
-        if(chess.isDraw())
-        {
-          const selecteffect=store.commit('Selecteffect',4);
-          store.state.effectstate=true;
-        }
-        chess.reset()
-      }
     },
   }
 
