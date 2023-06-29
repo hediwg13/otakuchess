@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "animate": "^1.0.0",
     "asdf": "^1.2.2",
     "axios": "^1.4.0",
     "can-ndjson-stream": "^1.0.2",
@@ -22,6 +23,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
-    "vite": "^4.3.5"
+    "vite": "^4.3.9"
   }
 }

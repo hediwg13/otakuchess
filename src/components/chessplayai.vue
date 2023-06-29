@@ -6,11 +6,11 @@ import store from '../storage/storage.js'
 <template>
     <v-main class="background">
       <effect v-if="store.state.effectstate" @click="effectcheck"></effect>
-      <v-container class=" pa-0">
+      <v-container fluid class=" pa-0">
         <v-spacer></v-spacer>
-        <v-row  class="my-10">
+        <v-row  class="my-5">
           <v-col cols="3" class="portrait">
-            <v-img class="ma-7"
+            <v-img class="ma-10"
                    src='/black.png'
                    cover
             ></v-img>
@@ -18,12 +18,11 @@ import store from '../storage/storage.js'
             <v-img class="ma-0" src="/page.png">
               <img class="questtag" src="/quest.png" style="top:0%; align-items: center"></v-img>
           </v-col>
-          <v-spacer></v-spacer>
           <v-col cols="6">
             <v-sheet class="pa-3 ma-7">
               .v-col-auto
             </v-sheet>
-            <chessgame/></v-col>
+            <chessgame class="ma-15"/></v-col>
           <v-col cols="3" class="portrait">
             <v-layout justify-space-around class="mb-2">
             <span class="group pa-2">

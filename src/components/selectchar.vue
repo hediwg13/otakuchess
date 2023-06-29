@@ -1,7 +1,7 @@
 <template>
 
   <v-main class="background" v-bind:style='img[kind]'>
-  <v-container class="ma-0">
+  <v-container fluid class="ma-0 pa-0">
       <div class="name" v-html="name[kind]" v-bind:style='namestyle[kind]'></div>
       <div class="difficulty" v-show="kind!=null">난이도 : **</div>
       <div class="selecttext" v-show="kind==null">캐릭터를 선택해주세요</div>
@@ -89,8 +89,9 @@
 .selecttext{
   font-family: 'Do Hyeon', sans-serif;
   font-size: 66px;
-  text-align:right;
-  margin-top:30%;
+  text-align:center;
+  padding:0px;
+  margin-top:20%;
   color:white;
 }
 </style>

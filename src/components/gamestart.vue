@@ -3,7 +3,7 @@
   <v-container class="ma-0">
   <img class="rook" src='/start/rook.png'>
     <img class="pawn" src='/start/pawn.png'>
-    <router-link to ="/select"><v-btn class="gamestart" variant="tonal" color="white">game</v-btn></router-link>
+    <router-link to ="/select"><v-btn x-large class="gamestart" variant="elevated" height="68" color="black">게임하기</v-btn></router-link>
     <img class="knight" src='/start/knight.png'>
   </v-container>
 </v-main>
@@ -16,6 +16,7 @@ export default {
 </script>
 
 <style scoped>
+@import "../animate.css";
 .gamestart
 {
   position:absolute;
