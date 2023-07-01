@@ -3,7 +3,8 @@ import {createStore} from "vuex";
 export default createStore({
     state: {
         effectcase : 1,
-        effectstate:0
+        effectstate:0,
+        charkind:null
     },
     getters:{
 
@@ -16,6 +17,10 @@ export default createStore({
         Deleteeffect(state,kind)
         {
             state.effectstate=kind;
+        },
+        selectchar(state,kind)
+        {
+            state.charkind=kind;
         }
     }
 })

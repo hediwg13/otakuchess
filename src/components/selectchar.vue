@@ -1,15 +1,19 @@
+<script setup>
+import store from '../storage/storage.js'
+</script>
 <template>
 
-  <v-main class="background" v-bind:style='img[kind]'>
+  <v-main class="background" v-bind:style='img[store.state.charkind]'>
   <v-container fluid class="ma-0 pa-0">
-      <div class="name" v-html="name[kind]" v-bind:style='namestyle[kind]'></div>
-      <div class="difficulty" v-show="kind!=null">난이도 : **</div>
-      <div class="selecttext" v-show="kind==null">캐릭터를 선택해주세요</div>
-      <div class="subtext" v-html="subtext[kind]"></div>
+      <div class="name" v-html="name[store.state.charkind]" v-bind:style='namestyle[store.state.charkind]'></div>
+      <div class="difficulty" v-show="store.state.charkind!=null">난이도 : **</div>
+      <div class="selecttext" v-show="store.state.charkind==null">캐릭터를 선택해주세요</div>
+      <div class="subtext" v-html="subtext[store.state.charkind]"></div>
       <img id="emilyportrait" class="portrait" style="left:60%;" src="/portrait/emily.png" @click="select('emily')">
       <img id="hanaportrait" class="portrait" style="left:30%" src="/portrait/hana.png" @click="select('hana')">
     <transition name="fade">
-      <router-link to ="/game"><v-btn class="gamestart" variant="tonal" color="white" v-show="kind!=null">game</v-btn>
+      <router-link to ="/game">
+        <v-btn size="x-large" class="gamestart" variant="elevated" height="98" color="black" v-show="store.state.charkind!=null">대전하기</v-btn>
       </router-link>
     </transition>
 
@@ -30,8 +34,11 @@
 .gamestart
 {
   position:absolute;
-  top:50%;
+  top:70%;
   left:80%;
+  opacity:0.7;
+  font-size: 45px;
+  font-family: 'Do Hyeon', sans-serif;
 }
 .fade-enter-active,
 .fade-leave-active {
@@ -96,6 +103,7 @@
 }
 </style>
 <script>
+
 export default {
   data(){
     return{
@@ -110,11 +118,11 @@ export default {
     select(check){
       if(check=="emily")
       {
-        this.kind=0;
+        store.commit('selectchar',0);
       }
       else if(check=="hana")
       {
-        this.kind=1;
+        store.commit('selectchar',1);
       }
     },
   }

@@ -271,6 +271,8 @@ export default {
             store.state.effectstate=true;
           }
           chess.reset()
+          this.drawposition()
+          chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
         }
         const aimove=game.aiMove(1)
         chess.move({from:Object.keys(aimove)[0].toLowerCase(),to:Object.values(aimove)[0].toLowerCase()})
