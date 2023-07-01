@@ -31,7 +31,7 @@ import store from '../storage/storage.js'
               .v-col-auto
             </v-sheet>
             <chessgame class="ma-5" style="width:80%"/>
-          <v-btn size="x-large"></v-btn><v-btn size="x-large"></v-btn></v-col>
+          <v-btn size="x-large" @click="chesscontrol(-1)"></v-btn><v-btn size="x-large" @click="chesscontrol(1)"></v-btn></v-col>
           <v-col cols="3" class="portrait">
             <v-layout justify-space-around class="mb-2">
             <span class="group pa-2">
@@ -64,6 +64,10 @@ export default {
   methods: {
     effectcheck() {
       const deleteeffect = store.commit('Deleteeffect', 0)
+    },
+    chesscontrol(num)
+    {
+      store.commit('controlchess',num)
     }
   }
 }

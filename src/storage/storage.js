@@ -4,10 +4,8 @@ export default createStore({
     state: {
         effectcase : 1,
         effectstate:0,
-        charkind:null
-    },
-    getters:{
-
+        charkind:null,
+        chesscontrol:0
     },
     mutations:{
         Selecteffect(state,kind)
@@ -21,6 +19,17 @@ export default createStore({
         selectchar(state,kind)
         {
             state.charkind=kind;
+        },
+        controlchess(state,num)
+        {
+            state.chesscontrol=num;
+        }
+    },
+    getters:
+    {
+        controlboard:state=>
+        {
+            return state.chesscontrol;
         }
     }
 })
