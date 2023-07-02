@@ -93,19 +93,49 @@ export default {
       checkcontrol(val)
       {
         const subchess=new Chess();
-        let num=10;
+        chessfunctions.createrect([], screen.width,screen.height,this.color)
+        this.piecemove.length = 0
         switch(store.state.chesscontrol)
         {
           case -1:
-            console.log(num);
-            this.drawposition(subchess.board())
-            num--;
+            this.lock=true;
+            if(chess.history().length+store.state.boardhistory>0) {
+              subchess.load(chess.history({verbose: true})[chess.history().length + store.state.boardhistory-1].after);
+              this.drawposition(subchess.board())
+            }
+            else if(chess.history().length+store.state.boardhistory==0)
+            {
+              store.commit('controlchess',1);
+            }
             break;
           case 1:
-            console.log('b');
+            this.lock=true;
+            if(store.state.boardhistory>0)
+            {
+              this.lock=false;
+              store.commit('controlchess',-1);
+              break;
+            }
+            else if(store.state.boardhistory==0)
+            {
+              this.lock=false;
+            }
+            subchess.load(chess.history({verbose: true})[chess.history().length + store.state.boardhistory-1].after);
+            this.drawposition(subchess.board())
             break;
           case 0:
-            return 0;
+            break;
+          case 2:
+            this.lock=false;
+            store.commit('controlchess',2);
+            this.drawposition(chess.board())
+            break;
+          case 3:
+            chess.reset()
+            store.commit('Selecteffect',5)
+            store.state.effectstate=true;
+            this.drawposition(chess.board())
+            break;
         }
         store.commit('controlchess',0)
       }
@@ -116,7 +146,8 @@ export default {
       piecemove : [],
       chesseffect : 0,
       color:0,
-      boardposition:{white:{pawn:[],knight:[],rook:[],bishop:[],queen:[],king:[]},black:{pawn:[],knight:[],rook:[],bishop:[],queen:[],king:[]}}
+      lock:false,
+      boardposition:{white:{pawn:[['-1%', '62%'],['11.5%', '62%'],['23%', '62%'],['34.5%', '62%'],['47%', '62%'],['59%', '62%'],['71%', '62%'],['83%', '62%']],knight:[['11.5%', '74%'],['71%', '74%']],rook:[['-1%', '74%'],['83%', '74%']],bishop:[['23%', '74%'],['59%', '74%']],queen:[['34.5%', '74%']],king:[['47%', '74%']]},black:{pawn:[['-1%', '4%'],['11.5%', '4%'],['23%', '4%'],['34.5%', '4%'],['47%', '4%'],['59%', '4%'],['71%', '4%'],['83%', '4%']],knight:[['11.5%', '-7%'],['71%', '-7%']],rook:[['-1%', '-7%'],['83%', '-7%']],bishop:[['23%', '-7%'],['59%', '-7%']],queen:[['34.5%', '-7%']],king:[['47%', '-7%']]}},
     };
   },
   methods: {
@@ -213,7 +244,7 @@ export default {
   }
 },
     mouseClick(event) {
-      console.log(store.state.chesscontrol,store.getters.controlboard)
+      console.log(this.boardposition)
       let note=chessfunctions.notation(event.target.offsetWidth, event.target.offsetHeight, event.offsetX, event.offsetY) //클릭한 좌표
       if(this.color==1) //흑백 전환
       {
@@ -225,17 +256,9 @@ export default {
       {
         this. chesseffect=0;
       }
-      /*
-      if(chess.turn()=='b') {
-        if(this.color==0) {
+      if(this.lock==true) {
           return 0;
-        }
       }
-      else {
-        if(this.color==1) {
-          return 0;
-        }
-      }*/
       if(chess.moves({square: note}).length!=0) //클릭한 좌표에 움직일 수 있는 기물이 있을 경우
       {
         this.piecemove=[]

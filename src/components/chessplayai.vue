@@ -31,22 +31,12 @@ import store from '../storage/storage.js'
               .v-col-auto
             </v-sheet>
             <chessgame class="ma-5" style="width:80%"/>
-          <v-btn size="x-large" @click="chesscontrol(-1)"></v-btn><v-btn size="x-large" @click="chesscontrol(1)"></v-btn></v-col>
+          <v-btn size="x-large" @click="chesscontrol(-1)"></v-btn><v-btn size="x-large" @click="chesscontrol(1)"></v-btn><v-btn size="x-large" @click="chesscontrol(2)"></v-btn></v-col>
           <v-col cols="3" class="portrait">
-            <v-layout justify-space-around class="mb-2">
-            <span class="group pa-2">
-            <v-icon>feed</v-icon>
-            </span>
-            </v-layout>
+             <v-btn size="x-large" @click="chesscontrol(3)"></v-btn>
             <v-img class="ma-10"
-                   src="/portrait/emily.png"
+                   src="/portrait/black.png"
                    style="top:60%;width:65%"
-                   v-show="store.state.charkind==0"
-            ></v-img>
-            <v-img class="ma-10"
-                   src="/portrait/hana.png"
-                   style="top:60%;width:65%"
-                   v-show="store.state.charkind==1"
             ></v-img>
             <div class="nametag" style="top:95%">stockfish</div>
           </v-col>
@@ -60,6 +50,15 @@ export default {
   components: {
     chessgame,
     effect
+  },
+  data(){
+    return{
+      questtext:["중앙을 차지하세요\n" +
+      "기물을 전개하세요\n" +
+      "킹을 안전하게 하세요","기물을 전개해 상대를 압박하세요\n" +
+      "상대방의 킹을 공격해 체크메이트를 노리세요","킹을 전진시키세요\n" +
+      "폰을 승진시켜서 퀸으로 만드세요"]
+    }
   },
   methods: {
     effectcheck() {
