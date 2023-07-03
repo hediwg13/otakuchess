@@ -1,9 +1,9 @@
 <template>
 <v-main class="background">
   <v-container class="ma-0">
-  <img class="rook" src='/start/rook.png'>
-    <img class="pawn" src='/start/pawn.png'>
-    <img class="knight" src='/start/knight.png'>
+  <img class="rook" src='/start/rook.webp'>
+    <img class="pawn" src='/start/pawn.webp'>
+    <img class="knight" src='/start/knight.webp'>
     <p class="name">CHESS</p>
     <router-link to ="/select"><v-btn size="x-large" class="gamestart" variant="elevated" height="98" color="black">대전하기</v-btn></router-link>
   </v-container>
@@ -67,7 +67,7 @@ export default {
   }
 .background{
   content: "";
-  background: url('../img/gamebackground.png') no-repeat center center fixed !important;
+  background: url('/start/gamebackground.webp') no-repeat center center fixed !important;
   position: absolute;
   overflow:hidden;
   background-size: cover;

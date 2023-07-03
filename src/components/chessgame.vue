@@ -244,7 +244,6 @@ export default {
   }
 },
     mouseClick(event) {
-      console.log(this.boardposition)
       let note=chessfunctions.notation(event.target.offsetWidth, event.target.offsetHeight, event.offsetX, event.offsetY) //클릭한 좌표
       if(this.color==1) //흑백 전환
       {
@@ -338,9 +337,17 @@ export default {
       {
         if(this.piecemove.includes("cw") || this.piecemove.includes("cb")) {
           let move=chess.move("O-O")
+          game.move("E1","G1")
+          const aimove=game.aiMove(1)
+          chess.move({from:Object.keys(aimove)[0].toLowerCase(),to:Object.values(aimove)[0].toLowerCase()})
         }
         else {
           chess.move("O-O-O")
+          game.move("E1","G1")
+          game.aiMove(1)
+          const aimove=game.aiMove(1)
+          chess.move({from:Object.keys(aimove)[0].toLowerCase(),to:Object.values(aimove)[0].toLowerCase()})
+
         }
         const selecteffect=store.commit('Selecteffect',1);
         store.state.effectstate=true;
@@ -348,7 +355,6 @@ export default {
         this.piecemove.length = 0
       }
       this.drawposition(chess.board())
-
     },
   }
 

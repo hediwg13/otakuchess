@@ -11,13 +11,13 @@ import store from '../storage/storage.js'
         <v-row  class="my-5">
           <v-col cols="3" class="portrait">
             <v-img class="ml-10"
-                   src='/portrait/emily.png'
+                   src='/portrait/emily.webp'
                    v-show="store.state.charkind==0"
                    style="width:65%"
                    cover
             ></v-img>
             <v-img class="ml-10"
-                   src='/portrait/hana.png'
+                   src="/portrait/emily.webp"
                    v-show="store.state.charkind==1"
                    style="width:65%"
                    cover
@@ -36,7 +36,7 @@ import store from '../storage/storage.js'
           <v-col cols="3" class="portrait">
              <v-btn size="x-large" @click="chesscontrol(3)"></v-btn>
             <v-img class="ma-10"
-                   src="/portrait/black.png"
+                   src="/portrait/black.webp"
                    style="top:60%;width:65%"
             ></v-img>
             <div class="nametag" style="top:95%">stockfish</div>
