@@ -152,7 +152,7 @@ export default {
   },
   methods: {
     effectcheck() {
-      const deleteeffect=store.commit('Deleteeffect',0)
+      const deleteeffect=store.commit('Selecteffect',0)
     },
     connettolichess()
     {
@@ -242,7 +242,23 @@ export default {
       }
     }
   }
-},
+    },
+    evalposition(chess)
+    {
+        const chesstext=chess.fen();
+        let piecenum=[chessfunctions.countchar(chesstext,"P"),chessfunctions.countchar(chesstext,"R"),chessfunctions.countchar(chesstext,"B"),chessfunctions.countchar(chesstext,"N"),chessfunctions.countchar(chesstext,"Q"),chessfunctions.countchar(chesstext,"p"),chessfunctions.countchar(chesstext,"r"),chessfunctions.countchar(chesstext,"b"),chessfunctions.countchar(chesstext,"n"),chessfunctions.countchar(chesstext,"q")];
+        let whitenum=piecenum[0]+piecenum[1]*5+piecenum[2]*3+piecenum[3]*3+piecenum[4]*9
+        let blacknum=piecenum[5]+piecenum[6]*5+piecenum[7]*3+piecenum[8]*3+piecenum[9]*9
+        if(whitenum>blacknum)
+        {
+          store.commit('controltext',1);
+        }
+        else if(whitenum<blacknum)
+        {
+          store.commit('controltext',2);
+        }
+        console.log(whitenum,blacknum);
+    },
     mouseClick(event) {
       let note=chessfunctions.notation(event.target.offsetWidth, event.target.offsetHeight, event.offsetX, event.offsetY) //클릭한 좌표
       if(this.color==1) //흑백 전환
@@ -331,7 +347,7 @@ export default {
         this.drawposition(chess.board())
         chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
         this.piecemove.length = 0
-
+        this.evalposition(chess);
       }
       else if(this.piecemove.includes("cw") || this.piecemove.includes("cb") || this.piecemove.includes("qw") || this.piecemove.includes("qb"))
       {

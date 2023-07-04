@@ -6,16 +6,14 @@ export default createStore({
         effectstate:0,
         charkind:null,
         chesscontrol:0,
-        boardhistory:0
+        boardhistory:0,
+        questtext:0,
+        ballontext:0
     },
     mutations:{
         Selecteffect(state,kind)
         {
             state.effectcase=kind;
-        },
-        Deleteeffect(state,kind)
-        {
-            state.effectstate=kind;
         },
         selectchar(state,kind)
         {
@@ -36,6 +34,10 @@ export default createStore({
             {
                 state.boardhistory=0;
             }
+        },
+        controltext(state,kind)
+        {
+            state.ballontext=kind;
         }
     },
     getters:

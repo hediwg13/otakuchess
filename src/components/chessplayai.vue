@@ -26,10 +26,10 @@ import store from '../storage/storage.js'
             <v-img class="mt-16 mx-0" src="/page.png" style="width:90%">
               <img class="questtag" src="/quest.png" style="top:0%">
               <div class="ballon">quest</div>
-              <div class="questtext" v-html="questtext[0]"></div></v-img>
+              <div class="questtext" v-html="questtext[store.state.questtext]"></div></v-img>
           </v-col>
           <v-col cols="6" align="center">
-            <v-sheet class="bubble" v-html="hinatext[0]">
+            <v-sheet class="bubble" v-html="hinatext[store.state.ballontext]">
             </v-sheet>
             <chessgame class="ma-5" style="width:80%"/>
           <v-btn size="x-large" @click="chesscontrol(-1)"></v-btn><v-btn size="x-large" @click="chesscontrol(1)"></v-btn><v-btn size="x-large" @click="chesscontrol(2)"></v-btn></v-col>

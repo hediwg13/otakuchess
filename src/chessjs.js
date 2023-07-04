@@ -1,5 +1,17 @@
 const chessfunctions={
-    notation,notetonum,createrect,piecemovey,piecemovex,notepiece
+    notation,notetonum,createrect,piecemovey,piecemovex,notepiece,countchar
+}
+function countchar(text, char)
+{
+    let cnt=0;
+    let searchtext=text.indexOf(char);
+    while(searchtext!=-1)
+    {
+        cnt++;
+        searchtext=text.indexOf(char,searchtext+1);
+    }
+    return cnt;
+
 }
 function notation(imgx, imgy, x,y)
 {
