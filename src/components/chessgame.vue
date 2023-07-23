@@ -151,9 +151,6 @@ export default {
     };
   },
   methods: {
-    effectcheck() {
-      const deleteeffect=store.commit('Selecteffect',0)
-    },
     connettolichess()
     {
       const headers = {
@@ -172,7 +169,6 @@ export default {
       }
       this.axios.post(`${BASE_URL}`,qs.stringify(data),{headers})
           .then((result)  => {
-            console.log(result.data)
             localStorage.setItem("gameid", result.data.id);}
           )
     },
@@ -251,13 +247,20 @@ export default {
         let blacknum=piecenum[5]+piecenum[6]*5+piecenum[7]*3+piecenum[8]*3+piecenum[9]*9
         if(whitenum>blacknum)
         {
-          store.commit('controltext',1);
+          store.commit('controltext',5);
+        }
+        else if(whitenum==blacknum)
+        {
+          store.commit('controltext',3);
         }
         else if(whitenum<blacknum)
         {
-          store.commit('controltext',2);
+          store.commit('controltext',1);
         }
-        console.log(whitenum,blacknum);
+        if(whitenum<20 & blacknum<20)
+        {
+          store.commit('questtext',2);
+        }
     },
     mouseClick(event) {
       let note=chessfunctions.notation(event.target.offsetWidth, event.target.offsetHeight, event.offsetX, event.offsetY) //클릭한 좌표
@@ -342,8 +345,18 @@ export default {
           this.drawposition(chess.board())
           chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
         }
+        if(chess.inCheck())
+        {
+          const selecteffect=store.commit('Selecteffect',6);
+          store.state.effectstate=true;
+        }
         const aimove=game.aiMove(1)
         chess.move({from:Object.keys(aimove)[0].toLowerCase(),to:Object.values(aimove)[0].toLowerCase()})
+        if(chess.inCheck())
+        {
+          const selecteffect=store.commit('Selecteffect',7);
+          store.state.effectstate=true;
+        }
         this.drawposition(chess.board())
         chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
         this.piecemove.length = 0
@@ -369,6 +382,7 @@ export default {
         store.state.effectstate=true;
         chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
         this.piecemove.length = 0
+        store.commit('questtext',1)
       }
       this.drawposition(chess.board())
     },

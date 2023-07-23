@@ -15,6 +15,10 @@ export default createStore({
         {
             state.effectcase=kind;
         },
+        deleteeffect(state,kind)
+        {
+            state.effectstate=kind;
+        },
         selectchar(state,kind)
         {
             state.charkind=kind;
@@ -38,6 +42,10 @@ export default createStore({
         controltext(state,kind)
         {
             state.ballontext=kind;
+        },
+        questtext(state,kind)
+        {
+            state.questtext=kind;
         }
     },
     getters:

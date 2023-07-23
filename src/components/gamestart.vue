@@ -4,19 +4,13 @@
   <img class="rook" src='/start/rook.webp'>
     <img class="pawn" src='/start/pawn.webp'>
     <img class="knight" src='/start/knight.webp'>
-    <p class="name">CHESS</p>
+    <v-container class="name">CHESS</v-container>
     <router-link to ="/select"><v-btn size="x-large" class="gamestart" variant="elevated" height="98" color="black">대전하기</v-btn></router-link>
   </v-container>
 </v-main>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-    };
-  }
-}
+<script setup>
+import gsap from 'gsap'
 </script>
 
 <style scoped>
@@ -31,7 +25,6 @@ export default {
   font-family: 'Do Hyeon', sans-serif;
   margin-top:5%;
   margin-left:40%;
-  opacity:0.7;
 }
 .name
 {
@@ -48,14 +41,12 @@ export default {
   position:absolute;
   max-height: 100%;
   left:-5%;
-  transition: all 1.3s ease;
 }
 .pawn
  {
    position:absolute;
    max-height: 100%;
    left:13%;
-   transition: all 0.3s ease;
  }
 .knight
   {
@@ -63,7 +54,6 @@ export default {
     height: 250%;
     max-height:110%;
     left:60%;
-  transition: all 0.3s ease;
   }
 .background{
   content: "";
@@ -75,3 +65,23 @@ export default {
   justify-content: center;
 }
 </style>
+<script>
+export default {
+  data() {
+    return {
+    };
+  },
+  methods:{
+    animate(){
+      gsap.from(".gamestart", {opacity:0, duration: 0.5});
+      gsap.from(".rook", {x: -200,opacity:0,duration: 1, delay:0.2});
+      gsap.from(".pawn", {x: -200,opacity:0,duration: 1});
+      gsap.from(".knight", {x: 200,opacity:0,duration: 1,delay:0.1});
+      gsap.from(".name", {opacity:0,duration: 1,delay:0.5});
+    }
+  },
+  mounted(){
+    this.animate();
+  }
+}
+</script>

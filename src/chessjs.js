@@ -64,7 +64,11 @@ function createrect(note,imgx,imgy,color)
         for(let i of note)
         {
             let [x1,y1,x2,y2]=notetonum(i,imgx,imgy)
-            context.fillRect(x1,y1,x2-x1,y2-y1)
+         //   context.fillRect(x1,y1,x2-x1,y2-y1)
+            context.beginPath()
+            context.arc(x1+(x2-x1)/2,y1+(y2-y1)/2,(x2-x1)/3,0,2*Math.PI)
+            context.fillStyle='blue'
+            context.fill()
         }
     }
     else if(color==1)

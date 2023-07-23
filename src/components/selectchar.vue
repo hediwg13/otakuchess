@@ -9,8 +9,8 @@ import store from '../storage/storage.js'
       <div class="difficulty" v-show="store.state.charkind!=null">난이도 : **</div>
       <div class="selecttext" v-show="store.state.charkind==null">캐릭터를 선택해주세요</div>
       <div class="subtext" v-html="subtext[store.state.charkind]"></div>
-      <img id="emilyportrait" class="portrait" style="left:60%;" src="/portrait/emily.webp" @click="select('emily')">
-      <img id="hanaportrait" class="portrait" style="left:30%" src="/portrait/hana.webp" @click="select('hana')">
+      <img id="emilyportrait" class="portraits" style="left:60%;" src="/portrait/emily.webp" @click="select('emily')">
+      <img id="hanaportrait" class="portraits" style="left:30%" src="/portrait/hana.webp" @click="select('hana')">
     <transition name="fade">
       <router-link to ="/game">
         <v-btn size="x-large" class="gamestart" variant="elevated" height="98" color="black" v-show="store.state.charkind!=null">대전하기</v-btn>
@@ -79,7 +79,7 @@ import store from '../storage/storage.js'
   word-break: keep-all;
   line-height:100%;
 }
-.portrait{
+.portraits{
   position:absolute;
   top:60%
 }

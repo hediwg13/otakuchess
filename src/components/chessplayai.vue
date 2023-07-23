@@ -1,15 +1,16 @@
 <script setup>
 import chessgame from './chessgame.vue'
 import effect from './effect.vue'
+import gsap from 'gsap'
 import store from '../storage/storage.js'
 </script>
 <template>
     <v-main class="background">
-      <effect v-if="store.state.effectstate" @click="effectcheck"></effect>
+      <effect v-if="store.state.effectstate"></effect>
       <v-container fluid class=" px-10 mx-10">
         <v-spacer></v-spacer>
         <v-row  class="my-5">
-          <v-col cols="3" class="portrait">
+          <v-col cols="3" class="portraits">
             <v-img class="ml-10"
                    src='/portrait/emily.webp'
                    v-show="store.state.charkind==0"
@@ -17,7 +18,7 @@ import store from '../storage/storage.js'
                    cover
             ></v-img>
             <v-img class="ml-10"
-                   src="/portrait/emily.webp"
+                   src="/portrait/hana.webp"
                    v-show="store.state.charkind==1"
                    style="width:65%"
                    cover
@@ -32,9 +33,12 @@ import store from '../storage/storage.js'
             <v-sheet class="bubble" v-html="hinatext[store.state.ballontext]">
             </v-sheet>
             <chessgame class="ma-5" style="width:80%"/>
-          <v-btn size="x-large" @click="chesscontrol(-1)"></v-btn><v-btn size="x-large" @click="chesscontrol(1)"></v-btn><v-btn size="x-large" @click="chesscontrol(2)"></v-btn></v-col>
-          <v-col cols="3" class="portrait">
-             <v-btn size="x-large" @click="chesscontrol(3)"></v-btn>
+            <v-btn class="chessbutton" size="x-large" @click="chesscontrol(-1)">뒤로</v-btn>
+            <v-btn class="chessbutton" size="x-large" @click="chesscontrol(1)">앞으로</v-btn>
+            <v-btn class="chessbutton" size="x-large" @click="chesscontrol(2)">원래대로</v-btn>
+          </v-col>
+          <v-col cols="3" class="portraits">
+             <v-btn size="x-large" @click="chesscontrol(3)">resgin</v-btn>
             <v-img class="ma-10"
                    src="/portrait/black.webp"
                    style="top:60%;width:65%"
@@ -63,19 +67,20 @@ export default {
     }
   },
   methods: {
-    effectcheck() {
-      const deleteeffect = store.commit('Deleteeffect', 0)
-    },
     chesscontrol(num)
     {
       store.commit('controlchess',num)
     }
+  },
+  mounted(){
+    store.state.effectstate=true;
+    store.commit('Selecteffect',8);
   }
 }
 </script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-.portrait
+.portraits
 {
   filter: drop-shadow(10px 10px 10px #000);
 }
@@ -94,6 +99,10 @@ export default {
 {
   font-size:35px;
   font-family: 'Do Hyeon', sans-serif;
+}
+.chessbutton
+{
+  font-size:100px;
 }
 .questtag
 {
