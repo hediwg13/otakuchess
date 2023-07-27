@@ -1,6 +1,11 @@
 <template>
 <v-main class="background">
   <v-container class="ma-0">
+    <div v-if="isload" class="loading-container">
+      <div class="loading">
+        <Fade-loader />
+      </div>
+    </div>
   <img class="rook" src='/start/rook.webp'>
     <img class="pawn" src='/start/pawn.webp'>
     <img class="knight" src='/start/knight.webp'>
@@ -11,10 +16,10 @@
 </template>
 <script setup>
 import gsap from 'gsap'
+import FadeLoader from 'vue-spinner/src/FadeLoader.vue'
 </script>
 
 <style scoped>
-@import "../animate.css";
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 @import url('https://fonts.cdnfonts.com/css/elephant');
 .gamestart
@@ -25,6 +30,14 @@ import gsap from 'gsap'
   font-family: 'Do Hyeon', sans-serif;
   margin-top:5%;
   margin-left:40%;
+}
+.loading {
+  z-index: 200;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: rgba(0, 0, 0,0.9) 0 0 0 9999px;
 }
 .name
 {
@@ -69,6 +82,7 @@ import gsap from 'gsap'
 export default {
   data() {
     return {
+      isload:true
     };
   },
   methods:{
@@ -81,7 +95,13 @@ export default {
     }
   },
   mounted(){
-    this.animate();
+ //   const imgNode= document.getElementsByClassName("background")
+ //   console.log(imgNode[0])
+  //  imgNode[0].addEventListener("click",()=>{console.log(this.isload);this.animate();this.isload=false;})
+    if(this.isload)
+    {
+      this.animate();this.isload=false;
+    }
   }
 }
 </script>

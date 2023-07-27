@@ -3,12 +3,12 @@ import store from '../storage/storage.js'
 </script>
 <template>
 
-  <v-main class="background" v-bind:style='img[store.state.charkind]'>
+  <v-main class="background" v-bind:style='store.state.charkind.backimg'>
   <v-container fluid class="ma-0 pa-0">
-      <div class="name" v-html="name[store.state.charkind]" v-bind:style='namestyle[store.state.charkind]'></div>
-      <div class="difficulty" v-show="store.state.charkind!=null">난이도 : **</div>
-      <div class="selecttext" v-show="store.state.charkind==null">캐릭터를 선택해주세요</div>
-      <div class="subtext" v-html="subtext[store.state.charkind]"></div>
+      <div class="name" v-html="store.state.charkind.name" v-bind:style='namestyle[store.state.charkind.kind]'></div>
+      <div class="difficulty" v-show="store.state.charkind.kind!=null">난이도 : **</div>
+      <div class="selecttext" v-show="store.state.charkind.kind==null">캐릭터를 선택해주세요</div>
+      <div class="subtext" v-html="store.state.charkind.subtext"></div>
       <img id="emilyportrait" class="portraits" style="left:60%;" src="/portrait/emily.webp" @click="select('emily')">
       <img id="hanaportrait" class="portraits" style="left:30%" src="/portrait/hana.webp" @click="select('hana')">
     <transition name="fade">
@@ -108,10 +108,7 @@ export default {
   data(){
     return{
       kind:null,
-      name:['에밀리','하나'],
-      img:['background: url(\'/character/emily.webp\') no-repeat center/cover !important','background: url(\'/character/hana.webp\') no-repeat center/cover !important'],
-      namestyle:['color:blue','color:deeppink'],
-      subtext:['누구에게나 다정다감한 성격의 소유자로 이상형은 자기보다 체스를 잘하는 남자 <br> 프렌치 디펜스를 즐겨 쓰며, d4를 두는 사람을 싫어한다','우연히 체스에 관심을 갖게 된 고등학교 2학년 여학생 <br> 아직까지 실력은 귀여운 수준이지만 빠르게 실력이 성장하고 있다']
+      namestyle:['color:blue','color:deeppink']
     };
   },
   methods: {

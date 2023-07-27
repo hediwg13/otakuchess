@@ -6,27 +6,20 @@ import store from '../storage/storage.js'
 </script>
 <template>
     <v-main class="background">
-      <effect v-if="store.state.effectstate"></effect>
+      <effect v-if="store.state.chessdata.effectstate"></effect>
       <v-container fluid class=" px-10 mx-10">
         <v-spacer></v-spacer>
         <v-row  class="my-5">
           <v-col cols="3" class="portraits">
             <v-img class="ml-10"
-                   src='/portrait/emily.webp'
-                   v-show="store.state.charkind==0"
+                   :src="`${store.state.charkind.src}`"
                    style="width:65%"
                    cover
             ></v-img>
-            <v-img class="ml-10"
-                   src="/portrait/hana.webp"
-                   v-show="store.state.charkind==1"
-                   style="width:65%"
-                   cover
-            ></v-img>
-            <div class="nametag">stockfish</div>
+            <div class="nametag">{{store.state.charkind.name}}</div>
             <v-img class="mt-16 mx-0" src="/page.png" style="width:90%">
-              <img class="questtag" src="/quest.png" style="top:0%">
               <div class="ballon">quest</div>
+              <img class="questtag" src="/quest.png" style="top:0%">
               <div class="questtext" v-html="questtext[store.state.questtext]"></div></v-img>
           </v-col>
           <v-col cols="6" align="center">
@@ -43,7 +36,7 @@ import store from '../storage/storage.js'
                    src="/portrait/black.webp"
                    style="top:60%;width:65%"
             ></v-img>
-            <div class="nametag" style="top:95%">stockfish</div>
+            <div class="nametag" style="top:95%">player</div>
           </v-col>
         </v-row>
       </v-container>
@@ -73,7 +66,7 @@ export default {
     }
   },
   mounted(){
-    store.state.effectstate=true;
+    store.state.chessdata.effectstate=true;
     store.commit('Selecteffect',8);
   }
 }
@@ -93,12 +86,19 @@ export default {
   opacity:50%;
   top:28%;
   left:4%;
-  position:absolute;
+  font-size: 35px;
+  font-family: 'Do Hyeon', sans-serif;
+  color:white;
+  text-align: center;
 }
 .ballon
 {
-  font-size:35px;
+  position:relative;
+  font-size:55px;
   font-family: 'Do Hyeon', sans-serif;
+  text-align: center;
+  z-index:100;
+  color:white;
 }
 .chessbutton
 {

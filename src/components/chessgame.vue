@@ -75,7 +75,7 @@ import * as jsChessEngine from 'js-chess-engine'
 import ndjsonStream from "can-ndjson-stream";
 
 const chess=new Chess();
-const game=new jsChessEngine.Game();
+let game=new jsChessEngine.Game();
 
 export default {
   components:{
@@ -133,7 +133,7 @@ export default {
           case 3:
             chess.reset()
             store.commit('Selecteffect',5)
-            store.state.effectstate=true;
+            store.state.chessdata.effectstate=true;
             this.drawposition(chess.board())
             break;
         }
@@ -144,7 +144,6 @@ export default {
     return{
       presentnote : 0,
       piecemove : [],
-      chesseffect : 0,
       color:0,
       lock:false,
       boardposition:{white:{pawn:[['-1%', '62%'],['11.5%', '62%'],['23%', '62%'],['34.5%', '62%'],['47%', '62%'],['59%', '62%'],['71%', '62%'],['83%', '62%']],knight:[['11.5%', '74%'],['71%', '74%']],rook:[['-1%', '74%'],['83%', '74%']],bishop:[['23%', '74%'],['59%', '74%']],queen:[['34.5%', '74%']],king:[['47%', '74%']]},black:{pawn:[['-1%', '4%'],['11.5%', '4%'],['23%', '4%'],['34.5%', '4%'],['47%', '4%'],['59%', '4%'],['71%', '4%'],['83%', '4%']],knight:[['11.5%', '-7%'],['71%', '-7%']],rook:[['-1%', '-7%'],['83%', '-7%']],bishop:[['23%', '-7%'],['59%', '-7%']],queen:[['34.5%', '-7%']],king:[['47%', '-7%']]}},
@@ -268,12 +267,6 @@ export default {
       {
         note=chessfunctions.notation(event.target.offsetWidth, event.target.offsetHeight,event.target.offsetWidth- event.offsetX, event.target.offsetHeight-event.offsetY)
       }
-
-
-      if(this. chesseffect==1)
-      {
-        this. chesseffect=0;
-      }
       if(this.lock==true) {
           return 0;
       }
@@ -290,26 +283,27 @@ export default {
           if(move=="O-O") //킹사이드 캐슬링일 경우
           {
             if(chess.turn()=="w") {
-              this.piecemove[i]="cw"
+              this.piecemove[i]="g1"
             }
             else{
-              this.piecemove[i]="cb"
+              this.piecemove[i]="g8"
             }
           }
           else if(move=="O-O-O") //퀸사이드 캐슬링일 경우
           {
             if(chess.turn()=="w") {
-              this.piecemove[i]="qw"
+              this.piecemove[i]="c1"
             }
             else {
-              this.piecemove[i]="qb"
+              this.piecemove[i]="c8"
             }
           }
           else if(move.slice(-1)=="Q") //프로모션일 경우
           {
             this.piecemove[i]=move.slice(-4,move.length-2)
           }
-          else {//그 외
+          else //그 외
+          {
             this.piecemove[i]=move.slice(-2)
           }
         }
@@ -319,74 +313,28 @@ export default {
       else if(this.piecemove.includes(note)) //이미 선택한 칸이 있는 경우
       {
         let i=this.piecemove.indexOf(note)
-        let move=chess.move(chess.moves({square:this.presentnote})[i])
+        let move=chess.move({from:this.presentnote,to:note,promotion:"q"})
+        store.commit('chessc',chess)
+        console.log(game.getHistory())
         game.move(move.from, move.to)
         if(chess.isGameOver()) //게임이 끝났을 경우
         {
-          if(chess.isCheckmate())
-          {
-            if(chess.turn()=="w")
-            {
-              const selecteffect=store.commit('Selecteffect',5);
-              store.state.effectstate=true;
-            }
-            else
-            {
-              const selecteffect=store.commit('Selecteffect',3);
-              store.state.effectstate=true;
-            }
-          }
-          if(chess.isDraw())
-          {
-            const selecteffect=store.commit('Selecteffect',4);
-            store.state.effectstate=true;
-          }
           chess.reset()
           this.drawposition(chess.board())
+  //        game=new jsChessEngine.Game()
           chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
-        }
-        if(chess.inCheck())
-        {
-          const selecteffect=store.commit('Selecteffect',6);
-          store.state.effectstate=true;
+          return 0;
         }
         const aimove=game.aiMove(1)
-        chess.move({from:Object.keys(aimove)[0].toLowerCase(),to:Object.values(aimove)[0].toLowerCase()})
-        if(chess.inCheck())
-        {
-          const selecteffect=store.commit('Selecteffect',7);
-          store.state.effectstate=true;
-        }
+        chess.move({from:Object.keys(aimove)[0].toLowerCase(),to:Object.values(aimove)[0].toLowerCase(),promotion:"q"})
+        store.commit('chessc',chess)
         this.drawposition(chess.board())
         chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
         this.piecemove.length = 0
         this.evalposition(chess);
       }
-      else if(this.piecemove.includes("cw") || this.piecemove.includes("cb") || this.piecemove.includes("qw") || this.piecemove.includes("qb"))
-      {
-        if(this.piecemove.includes("cw") || this.piecemove.includes("cb")) {
-          let move=chess.move("O-O")
-          game.move("E1","G1")
-          const aimove=game.aiMove(1)
-          chess.move({from:Object.keys(aimove)[0].toLowerCase(),to:Object.values(aimove)[0].toLowerCase()})
-        }
-        else {
-          chess.move("O-O-O")
-          game.move("E1","G1")
-          game.aiMove(1)
-          const aimove=game.aiMove(1)
-          chess.move({from:Object.keys(aimove)[0].toLowerCase(),to:Object.values(aimove)[0].toLowerCase()})
-
-        }
-        const selecteffect=store.commit('Selecteffect',1);
-        store.state.effectstate=true;
-        chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
-        this.piecemove.length = 0
-        store.commit('questtext',1)
-      }
       this.drawposition(chess.board())
     },
   }
-
 };
 </script>

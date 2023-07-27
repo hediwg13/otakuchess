@@ -11,7 +11,7 @@ export default
     animate()
     {
       let timer=0;
-      switch(store.state.effectcase)
+      switch(store.state.chessdata.effectcase)
       {
         case 1:
         case 2:
@@ -125,23 +125,22 @@ export default
 <template>
   <div>
     <div id="backrect"></div>
-    <img class="effectchar" src="../img/effect/castling.png" v-if="store.state.effectcase==1" >
-    <img class="effectchar" src="../img/effect/promotion.png" v-if="store.state.effectcase==2" >
-    <div class="effecttext" v-if="store.state.effectcase==1">"명령대로...<br>제 목숨을 바쳐 당신을 지키겠습니다"</div>
-    <div class="effecttext" v-if="store.state.effectcase==2">"당신의 여왕이 될께요"</div>
-    <img class="effectchar" src="../img/effect/checkmate.png" v-if="store.state.effectcase==3" >
-    <div class="effecttext" v-if="store.state.effectcase==3">"체크메이트입니다!"</div>
-    <img class="effectchar" src="../img/effect/checkmate.png" v-if="store.state.effectcase==4" >
-    <div class="effecttext" v-if="store.state.effectcase==4">"무승부입니다."</div>
-    <img class="effectchar" src="../img/effect/checkmate.png" v-if="store.state.effectcase==5" >
-    <div class="effecttext" v-if="store.state.effectcase==5">"졌습니다."</div>
-    <div class="checktext" v-if="store.state.effectcase==6">check</div>
-    <div class="checktext" v-if="store.state.effectcase==7">check</div>
-    <div class="startgame" v-if="store.state.effectcase==8">
+    <img class="effectchar" src="../img/effect/castling.png" v-if="store.state.chessdata.effectcase==1" >
+    <img class="effectchar" src="../img/effect/promotion.png" v-if="store.state.chessdata.effectcase==2" >
+    <div class="effecttext" v-if="store.state.chessdata.effectcase==1">"명령대로...<br>제 목숨을 바쳐 당신을 지키겠습니다"</div>
+    <div class="effecttext" v-if="store.state.chessdata.effectcase==2">"당신의 여왕이 될께요"</div>
+    <img class="effectchar" src="../img/effect/checkmate.png" v-if="store.state.chessdata.effectcase==3" >
+    <div class="effecttext" v-if="store.state.chessdata.effectcase==3">"체크메이트입니다!"</div>
+    <img class="effectchar" src="../img/effect/checkmate.png" v-if="store.state.chessdata.effectcase==4" >
+    <div class="effecttext" v-if="store.state.chessdata.effectcase==4">"무승부입니다."</div>
+    <img class="effectchar" src="../img/effect/checkmate.png" v-if="store.state.chessdata.effectcase==5" >
+    <div class="effecttext" v-if="store.state.chessdata.effectcase==5">"졌습니다."</div>
+    <div class="checktext" v-if="store.state.chessdata.effectcase==6">check</div>
+    <div class="checktext" v-if="store.state.chessdata.effectcase==7">check</div>
+    <v-row class="startgame" v-if="store.state.chessdata.effectcase==8">
+      <v-img class="portrait" :src="`${store.state.charkind.src}`"></v-img>
       vs
-      <img class="portrait" style="left:20%;" v-if="store.state.charkind==1" src="/portrait/hana.webp">
-      <img class="portrait" style="left:20%;" v-if="store.state.charkind==0" src="/portrait/emily.webp">
-      <img class="portrait" style="left:70%;" src="/portrait/black.webp">
-    </div>
+      <v-img class="portrait" src="/portrait/black.webp"></v-img>
+    </v-row>
   </div>
 </template>
