@@ -95,13 +95,9 @@ export default {
     }
   },
   mounted(){
- //   const imgNode= document.getElementsByClassName("background")
- //   console.log(imgNode[0])
-  //  imgNode[0].addEventListener("click",()=>{console.log(this.isload);this.animate();this.isload=false;})
-    if(this.isload)
-    {
-      this.animate();this.isload=false;
-    }
+    const imgNode= document.getElementsByClassName("background")
+    console.log(imgNode[0])
+    window.addEventListener('load',()=>{this.animate();this.isload=false;})
   }
 }
 </script>
