@@ -111,6 +111,12 @@ export default {
       namestyle:['color:blue','color:deeppink']
     };
   },
+  created() {
+    const resource1 = new Image();
+    resource1.src = "/character/emily.webp";
+    const resource2 = new Image();
+    resource2.src = "/character/hana.webp";
+  },
   methods: {
     select(check){
       if(check=="emily")

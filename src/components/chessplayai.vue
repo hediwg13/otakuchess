@@ -2,6 +2,7 @@
 import chessgame from './chessgame.vue'
 import effect from './effect.vue'
 import gsap from 'gsap'
+import { mapState } from "vuex";
 import store from '../storage/storage.js'
 </script>
 <template>
@@ -23,15 +24,15 @@ import store from '../storage/storage.js'
               <div class="questtext" v-html="questtext[store.state.questtext]"></div></v-img>
           </v-col>
           <v-col cols="6" align="center">
-            <v-sheet class="bubble" v-html="hinatext[store.state.ballontext]">
+            <v-sheet class="bubble" v-html="store.state.charkind.ballondata[store.state.ballontext]">
             </v-sheet>
             <chessgame class="ma-5" style="width:80%"/>
-            <v-btn class="chessbutton" size="x-large" @click="chesscontrol(-1)">뒤로</v-btn>
-            <v-btn class="chessbutton" size="x-large" @click="chesscontrol(1)">앞으로</v-btn>
-            <v-btn class="chessbutton" size="x-large" @click="chesscontrol(2)">원래대로</v-btn>
+            <v-btn class="chessbutton" color="brown-darken-2" @click="chesscontrol(-1)">◀</v-btn>
+            <v-btn class="chessbutton" color="brown-darken-2" @click="chesscontrol(1)">▶</v-btn>
+            <v-btn class="chessbutton" color="brown-darken-2" @click="chesscontrol(2)">↺</v-btn>
           </v-col>
           <v-col cols="3" class="portraits">
-             <v-btn size="x-large" @click="chesscontrol(3)">resgin</v-btn>
+             <v-btn class="chessbutton" color="red" size="large" @click="chesscontrol(3)">기권하기</v-btn>
             <v-img class="ma-10"
                    src="/portrait/black.webp"
                    style="top:60%;width:65%"
@@ -51,12 +52,12 @@ export default {
   },
   data(){
     return{
+      dialog: true,
       questtext:["중앙을 차지하세요<br>" +
       "기물을 전개하세요<br>" +
       "킹을 안전하게 하세요","기물을 전개해 상대를 압박하세요<br>" +
       "상대방의 킹을 공격해 체크메이트를 노리세요","킹을 전진시키세요<br>" +
-      "폰을 승진시켜서 퀸으로 만드세요"],
-      hinatext:["잘 부탁해~","어때? 나 꽤 잘하지?","이미 내가 이긴 거 같은데? 헤헷","음... 좀 하는데?","흠... 한번만 봐주면 안될까?","이겼다!","졌다"]
+      "폰을 승진시켜서 퀸으로 만드세요"]
     }
   },
   methods: {
@@ -103,6 +104,8 @@ export default {
 .chessbutton
 {
   font-size:100px;
+  margin-left:30px;
+  font-family: 'Do Hyeon', sans-serif;
 }
 .questtag
 {
@@ -158,5 +161,6 @@ export default {
   opacity:0.7;
   font-size: 35px;
   font-family: 'Do Hyeon', sans-serif;
+  word-break: keep-all;
 }
 </style>

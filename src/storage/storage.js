@@ -2,8 +2,9 @@ import {createStore} from "vuex";
 
 export default createStore({
     state: {
-        chessdata:{effectcase:1,effectstate:0},
-        charkind:{kind:null},
+        chessdata:{effectcase:1,effectstate:0,gameover:false},
+        charkind:{kind:null,
+            ballondata:["잘 부탁해~","어때? 나 꽤 잘하지?","이미 내가 이긴 거 같은데? 헤헷","음... 좀 하는데?","흠... 한번만 봐주면 안될까?","좀 고민되네..."]},
         chesscontrol:0,
         boardhistory:0,
         questtext:0,
@@ -25,6 +26,7 @@ export default createStore({
                     state.charkind.src = "/portrait/emily.webp";
                     state.charkind.backimg = 'background: url(\'/character/emily.webp\') no-repeat center/cover !important';
                     state.charkind.subtext = "누구에게나 다정다감한 성격의 소유자로 이상형은 자기보다 체스를 잘하는 남자 <br> 프렌치 디펜스를 즐겨 쓰며, d4를 두는 사람을 싫어한다";
+                    state.charkind.ballondata=["잘 부탁해~","어때? 나 꽤 잘하지?","이미 내가 이긴 거 같은데? 헤헷","음... 좀 하는데?","흠... 한번만 봐주면 안될까?","좀 고민되네..."]
                     break;
                 case 1:
                     state.charkind.name = "하나";
@@ -32,6 +34,7 @@ export default createStore({
                     state.charkind.kind = kind;
                     state.charkind.backimg = 'background: url(\'/character/hana.webp\') no-repeat center/cover !important'
                     state.charkind.subtext = "우연히 체스에 관심을 갖게 된 고등학교 2학년 여학생 <br> 아직까지 실력은 귀여운 수준이지만 빠르게 실력이 성장하고 있다";
+                    state.charkind.ballondata=["잘 부탁해~","어때? 나 꽤 잘하지?","이미 내가 이긴 거 같은데? 헤헷","음... 좀 하는데?","흠... 한번만 봐주면 안될까?","좀 고민되네..."]
                     break;
             }
         },
@@ -54,15 +57,25 @@ export default createStore({
         chessc(state, chess) {
             state.chess = chess;
             if (chess.isCheck()) {
-                state.chessdata.effectstate = true;
-                state.chessdata.effectcase = 6;
+                if(chess.turn=="w")
+                {
+                    state.chessdata.effectstate = true;
+                    state.chessdata.effectcase = 6;
+                }
+                else
+                {
+                    state.chessdata.effectstate = true;
+                    state.chessdata.effectcase = 7;
+                }
             }
             if(chess.history()[chess.history().length-1]=="O-O" || chess.history()[chess.history().length-1]=="O-O-O")
             {
                 state.chessdata.effectstate=true;
                 state.chessdata.effectcase=1;
+                state.questtext=1;
             }
             if (chess.isGameOver()) {
+                state.chessdata.gameover=true;
                 if (chess.isDraw()) {
                     state.chessdata.effectstate = true;
                     state.chessdata.effectcase = 4;
@@ -76,6 +89,9 @@ export default createStore({
                         state.chessdata.effectstate = true;
                     }
                 }
+            }
+            else {
+                state.chessdata.gameover=false;
             }
         }
     },

@@ -76,7 +76,6 @@ import ndjsonStream from "can-ndjson-stream";
 
 const chess=new Chess();
 let game=new jsChessEngine.Game();
-
 export default {
   components:{
     effect
@@ -131,10 +130,9 @@ export default {
             this.drawposition(chess.board())
             break;
           case 3:
-            chess.reset()
+            this.gameend()
             store.commit('Selecteffect',5)
             store.state.chessdata.effectstate=true;
-            this.drawposition(chess.board())
             break;
         }
         store.commit('controlchess',0)
@@ -150,6 +148,15 @@ export default {
     };
   },
   methods: {
+    gameend()
+    {
+      chess.reset()
+      this.drawposition(chess.board())
+      game=null
+      game=new jsChessEngine.Game()
+      chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
+      store.commit('controltext',0);
+    },
     connettolichess()
     {
       const headers = {
@@ -240,21 +247,25 @@ export default {
     },
     evalposition(chess)
     {
-        const chesstext=chess.fen();
+        const chesstext=chess.fen().split(" ")[0];
         let piecenum=[chessfunctions.countchar(chesstext,"P"),chessfunctions.countchar(chesstext,"R"),chessfunctions.countchar(chesstext,"B"),chessfunctions.countchar(chesstext,"N"),chessfunctions.countchar(chesstext,"Q"),chessfunctions.countchar(chesstext,"p"),chessfunctions.countchar(chesstext,"r"),chessfunctions.countchar(chesstext,"b"),chessfunctions.countchar(chesstext,"n"),chessfunctions.countchar(chesstext,"q")];
         let whitenum=piecenum[0]+piecenum[1]*5+piecenum[2]*3+piecenum[3]*3+piecenum[4]*9
         let blacknum=piecenum[5]+piecenum[6]*5+piecenum[7]*3+piecenum[8]*3+piecenum[9]*9
         if(whitenum>blacknum)
         {
-          store.commit('controltext',5);
-        }
-        else if(whitenum==blacknum)
-        {
           store.commit('controltext',3);
+        }
+        else if(whitenum+9<blacknum)
+        {
+          store.commit('controltext',4);
         }
         else if(whitenum<blacknum)
         {
           store.commit('controltext',1);
+        }
+        else if(whitenum>9+blacknum)
+        {
+          store.commit('controltext',2);
         }
         if(whitenum<20 & blacknum<20)
         {
@@ -315,14 +326,10 @@ export default {
         let i=this.piecemove.indexOf(note)
         let move=chess.move({from:this.presentnote,to:note,promotion:"q"})
         store.commit('chessc',chess)
-        console.log(game.getHistory())
         game.move(move.from, move.to)
         if(chess.isGameOver()) //게임이 끝났을 경우
         {
-          chess.reset()
-          this.drawposition(chess.board())
-  //        game=new jsChessEngine.Game()
-          chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
+          this.gameend()
           return 0;
         }
         const aimove=game.aiMove(1)
@@ -331,6 +338,11 @@ export default {
         this.drawposition(chess.board())
         chessfunctions.createrect([], event.target.offsetWidth, event.target.offsetHeight,this.color)
         this.piecemove.length = 0
+        if(chess.isGameOver()) //게임이 끝났을 경우
+        {
+          this.gameend()
+          return 0;
+        }
         this.evalposition(chess);
       }
       this.drawposition(chess.board())

@@ -82,7 +82,7 @@ import FadeLoader from 'vue-spinner/src/FadeLoader.vue'
 export default {
   data() {
     return {
-      isload:true
+      isload:false
     };
   },
   methods:{
@@ -95,6 +95,7 @@ export default {
     }
   },
   mounted(){
+    this.isload=true;
     const imgNode= document.getElementsByClassName("background")
     console.log(imgNode[0])
     window.addEventListener('load',()=>{this.animate();this.isload=false;})
